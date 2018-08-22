@@ -1,12 +1,334 @@
-extends views/main.pug
-
-block head
-  title
-    = page.title + ' - ' + config.title
-
-block main
-  include mixins/post.pug
-  +post(page, 'post')
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
   
-  include plugins/reward.pug
-  include plugins/livere.pug
+
+  
+  <title>I&#39;m Yaoyee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="linux环境下基于TFTP协议下的文件传输项目 首先是了解linux环境下的网络编程和TFTP协议的具体内容 项目的基本原理是利用socket编程建立连接—— ​       客户端发起连接请求 ​       服务器无限循环监听请求，并根据请求建立相关的线程进行数据连接 ​       数据连接利用大于1024的随机端口号 ​       每传送一次文件即建立一次新的连接 ​       传送">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I&#39;m Yaoyee">
+<meta property="og:url" content="http://yoursite.com/2018/08/16/linux环境下基于TFTP协议下的文件传输项目/index.html">
+<meta property="og:site_name" content="I&#39;m Yaoyee">
+<meta property="og:description" content="linux环境下基于TFTP协议下的文件传输项目 首先是了解linux环境下的网络编程和TFTP协议的具体内容 项目的基本原理是利用socket编程建立连接—— ​       客户端发起连接请求 ​       服务器无限循环监听请求，并根据请求建立相关的线程进行数据连接 ​       数据连接利用大于1024的随机端口号 ​       每传送一次文件即建立一次新的连接 ​       传送">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-16T08:45:53.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="I&#39;m Yaoyee">
+<meta name="twitter:description" content="linux环境下基于TFTP协议下的文件传输项目 首先是了解linux环境下的网络编程和TFTP协议的具体内容 项目的基本原理是利用socket编程建立连接—— ​       客户端发起连接请求 ​       服务器无限循环监听请求，并根据请求建立相关的线程进行数据连接 ​       数据连接利用大于1024的随机端口号 ​       每传送一次文件即建立一次新的连接 ​       传送">
+  
+    <link rel="alternate" href="/atom.xml" title="I&#39;m Yaoyee" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">I&#39;m Yaoyee</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux环境下基于TFTP协议下的文件传输项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/16/linux环境下基于TFTP协议下的文件传输项目/" class="article-date">
+  <time datetime="2018-08-16T08:45:53.585Z" itemprop="datePublished">2018-08-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="linux环境下基于TFTP协议下的文件传输项目"><a href="#linux环境下基于TFTP协议下的文件传输项目" class="headerlink" title="linux环境下基于TFTP协议下的文件传输项目"></a>linux环境下基于TFTP协议下的文件传输项目</h2><ul>
+<li><p>首先是了解linux环境下的网络编程和TFTP协议的具体内容</p>
+<p>项目的基本原理是利用socket编程建立连接——</p>
+<p>​       客户端发起连接请求</p>
+<p>​       服务器无限循环监听请求，并根据请求建立相关的线程进行数据连接</p>
+<p>​       数据连接利用大于1024的随机端口号</p>
+<p>​       每传送一次文件即建立一次新的连接</p>
+<p>​       传送完成连接断开</p>
+</li>
+</ul>
+<p>  UDP数据传输的基本原理——</p>
+<p>  ​       UDP提供不可靠的传输支持，TFTP即基于UDP服务</p>
+<p>  ​       数据传输的过程中可能出现丢包，乱码和错序等等问题</p>
+<p>  ​       利用停等协议来控制基础的可靠传输</p>
+<pre><code><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">/*等待ACK应答报文*/</span></span><br><span class="line">    <span class="keyword">for</span>(time_wait_ack = <span class="number">0</span>; </span><br><span class="line">        time_wait_ack &lt; MAX_TIEM_WAIT; </span><br><span class="line">        time_wait_ack += <span class="number">20000</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        rcv_size = recvfrom(sock, &amp;rcv_packet, </span><br><span class="line">                            <span class="keyword">sizeof</span>(struct tftp_packet), MSG_DONTWAIT,</span><br><span class="line">                            (struct sockaddr *)&amp;sender,</span><br><span class="line">                            &amp;addr_len);</span><br><span class="line">        <span class="keyword">if</span>(rcv_size &gt; <span class="number">0</span> &amp;&amp; rcv_size &lt; <span class="number">4</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"数据包损坏t: rcv_size=%d\n"</span>, rcv_size);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(rcv_size &gt;= <span class="number">4</span> &amp;&amp; rcv_packet.optcode == htons(OPTCODE_ACK) &amp;&amp; rcv_packet.block == htons(block))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        usleep(<span class="number">20000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(time_wait_ack &lt; MAX_TIEM_WAIT) <span class="comment">//发送成功</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">continue</span>;  <span class="comment">// 重发报文</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li><p>TFTP协议的基本内容</p>
+<p>​        初始连接时候需要发出WRQ（请求写入远程系统）或RRQ（请求读取远程系统），收到一个ack。通常ACK包括要确认的包的包号，每个数据包都与一个块号相对应，块号从1开始而且是连续的。/对于写入请求的确定是一个比较特殊的情况，因此它的包的包号是0。如果收到的包是一个错误的包，则这个请求被拒绝。</p>
+<p>​       创建连接时，通信双方随机选择一个TID，因为是随机选择的，因此两次选择同一个ID的可能性就很小了。每个包包括两个TID，发送者ID和接收者ID。在第一次请求的时候它会将请求发到TID 69，也就是服务器的69端口上。应答时，服务器使用一个选择好的TID作为源TID，并用上一个包中的TID作为目的ID进行发送。这两个被选择的ID在随后的通信中会被一直使用。</p>
+<p>​        TFTP报文格式</p>
+</li>
+</ul>
+<p>  TFTP支持五种类型的包，我们在以上已经说明这五种类型的包：</p>
+<p>  ​       opcode operation</p>
+<p>  ​       1．Read request (RRQ)</p>
+<p>  ​       2．Write request (WRQ)</p>
+<p>  ​       3．Data (DATA)</p>
+<p>  ​       4．Acknowledgment (ACK)</p>
+<p>  ​       5．Error (ERROR)</p>
+<p>  包头中包括了这个包所指定的<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%A0%81" target="_blank" rel="noopener">操作码</a>。</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OPTCODE_RRQ (short)1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OPTCODE_WRQ (short)2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OPTCODE_DATA (short)3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OPTCODE_ACK (short)4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OPTCODE_ERROR (short)5</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>根据报文格式设置的数据结构为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tftp_packet</span>&#123;</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> optcode;    <span class="comment">//操作码</span></span><br><span class="line">  <span class="keyword">union</span>&#123;</span><br><span class="line">      <span class="keyword">unsigned</span> <span class="keyword">short</span> block;  <span class="comment">//文件中的块号</span></span><br><span class="line">      <span class="keyword">unsigned</span> <span class="keyword">short</span> code;   <span class="comment">//差错码</span></span><br><span class="line">      <span class="keyword">char</span> filename[<span class="number">2</span>];     <span class="comment">//相关信息存储的内存地址其中包含文件名 </span></span><br><span class="line">      <span class="comment">//模式以及块的大小 存储形式为"%s%c%s%c%c"</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">char</span> data[DATASIZE];       <span class="comment">//报文中用来存储数据的字符数组</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>​       其中采用union的原因是   union公用一块内存空间且大小均为两个字节， 三种不同的数据类型代表着三种不同的TFTP报文</p>
+<ul>
+<li>block代表DATA报文  指代块号</li>
+<li>errcode代表ERROR报文 指代差错码</li>
+<li>filename指代请求报文</li>
+</ul>
+</li>
+</ul>
+<p>  数据请求包为</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TFTP请求报文结构</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tftp_request</span>&#123;</span></span><br><span class="line">  <span class="keyword">int</span> size;                 <span class="comment">//请求报文的长度</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">client</span>;</span><span class="comment">//客户端的地址和端口信息</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">tftp_packet</span> <span class="title">packet</span>;</span><span class="comment">//报文</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>  ​       </p>
+<ul>
+<li><p>客户端主要结构：</p>
+<ul>
+<li>主程序的命令读取：</li>
+</ul>
+<p>就是简单从main函数读取、分割、strcmp识别</p>
+<p>跟case形式的命令解析是两种常用的方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"&gt;&gt; "</span>);</span><br><span class="line">    <span class="built_in">memset</span>(cmd_line, <span class="number">0</span>, LINE_BUF_SIZE); <span class="comment">//清空缓存区</span></span><br><span class="line">    buf = fgets(cmd_line, LINE_BUF_SIZE, <span class="built_in">stdin</span>);</span><br><span class="line">    <span class="keyword">if</span>(buf == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    arg = strtok (buf, <span class="string">" \t\n"</span>);<span class="comment">//取缓冲区字符</span></span><br><span class="line">    <span class="keyword">if</span>(arg == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">continue</span>; <span class="comment">//没有命令则视作没有输入，继续运行</span></span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">if</span>(<span class="built_in">strcmp</span>(arg, <span class="string">"list"</span>) == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        arg = strtok (<span class="literal">NULL</span>, <span class="string">" \t\n"</span>);</span><br><span class="line">        <span class="keyword">if</span>(arg == <span class="literal">NULL</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"错误: 缺少参数\n"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            do_list(sock, arg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">strcmp</span>(arg, <span class="string">"get"</span>) == <span class="number">0</span>)<span class="comment">//如果命令是get</span></span><br><span class="line">    &#123;</span><br><span class="line">        ……  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>客户端文件的文件操作</li>
+</ul>
+<p>​        主要内容是通过socket和服务器建立数据连接，并在此基础上通过不同的操作码设定不同的命令格式，这样的话可以通过往返报文连接明确接下来的Data包发送和接受的基本操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * file_download    从服务器端文件下载文件</span></span><br><span class="line"><span class="comment"> * @param  remote_file 服务器远端存储的文件名</span></span><br><span class="line"><span class="comment"> * @param  local_file  用户与命令行设定的存储于本地的文件名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">file_download</span><span class="params">(<span class="keyword">char</span> *remote_file, <span class="keyword">char</span> *local_file)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> rcv_size = <span class="number">0</span>; <span class="comment">//接受到的数据的大小</span></span><br><span class="line">    <span class="keyword">int</span> time_wait_data;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> block = <span class="number">1</span>; <span class="comment">//设置块号为1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*发送请求*/</span></span><br><span class="line">    snd_packet.optcode = htons(OPTCODE_RRQ); <span class="comment">//设定报文操作码</span></span><br><span class="line">    <span class="built_in">sprintf</span>(snd_packet.filename, <span class="string">"%s%c%s%c%d%c"</span>, remote_file, <span class="number">0</span>, <span class="string">"octet"</span>, <span class="number">0</span>, blocksize, <span class="number">0</span>); <span class="comment">//写入报文信息</span></span><br><span class="line">    sendto(sock, &amp;snd_packet, <span class="keyword">sizeof</span>(struct tftp_packet), <span class="number">0</span>, (struct sockaddr*)&amp;server, addr_len);</span><br><span class="line">    </span><br><span class="line">    FILE *fp = fopen(local_file, <span class="string">"w"</span>); <span class="comment">//以本地文件名创建文件并写入</span></span><br><span class="line">    <span class="keyword">if</span>(fp == <span class="literal">NULL</span>)&#123;</span><br><span class="line">       <span class="comment">//文件出错</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        ……</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*接受数据*/</span></span><br><span class="line">    snd_packet.optcode = htons(OPTCODE_ACK); <span class="comment">//写明报文操作符</span></span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">       <span class="comment">/*</span></span><br><span class="line"><span class="comment">       *停等协议</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    &#125;<span class="keyword">while</span>(rcv_size == blocksize + <span class="number">4</span>);</span><br><span class="line">    </span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="keyword">return</span>;<span class="comment">//退出并报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>  ​       文件传输模块的具体需求设计：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数名</th>
+<th>函数功能描述</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">file_download()</td>
+<td>客户端向服务器端上传本地文件，将数据封装到DATA报文，发送给服务器端。</td>
+<td>客户端会发送一个请求报文和多个DATA报文</td>
+</tr>
+<tr>
+<td style="text-align:center">file_upload(</td>
+<td>客户端从服务器端下载远端文件。从DATA报文中读取数据，存储到本地文件中。</td>
+<td>客户端会发送一个请求报文与多个ACK报文</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>服务器端的主要结构内容：</p>
+<ul>
+<li><p>服务器主程序：<br>循环监听模块：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(!done)&#123;<span class="comment">//服务器循环开启</span></span><br><span class="line">    request = (struct tftp_request *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct tftp_request));</span><br><span class="line">    <span class="built_in">memset</span>(request, <span class="number">0</span>, <span class="keyword">sizeof</span>(struct tftp_request));  <span class="comment">//置0</span></span><br><span class="line">    request-&gt;size = recvfrom(</span><br><span class="line">                             sock, &amp;(request-&gt;packet), MAX_REQUEST_SIZE, <span class="number">0</span>,</span><br><span class="line">                             (struct sockaddr *) &amp;(request-&gt;client),</span><br><span class="line">                             &amp;addr_len);</span><br><span class="line">    request-&gt;packet.optcode = ntohs(request-&gt;packet.optcode);<span class="comment">//提取报文信息</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"收到回应报文.\n"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//收到回复ACK建立连接之后，即创建新的线程对应新的客户端</span></span><br><span class="line">    <span class="keyword">if</span>(pthread_create(&amp;t_id, <span class="literal">NULL</span>, server_thread, request) != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"不能创建线程.\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数据连接字线程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">server_thread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sock;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(request-&gt;size &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"报文出错.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"服务器线程创建成功。\n"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建一个数据传输socket</span></span><br><span class="line">    <span class="keyword">if</span>((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"socket连接创建失败\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    server.sin_family = AF_INET;</span><br><span class="line">    server.sin_addr.s_addr = INADDR_ANY;</span><br><span class="line">    server.sin_port = <span class="number">0</span>;  <span class="comment">//设置数据传输socket端口号</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 数据传输socket绑定server地址</span></span><br><span class="line">    <span class="keyword">if</span> (bind(sock, (struct sockaddr *)&amp;server, <span class="keyword">sizeof</span>(server)) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"数据传输socket绑定失败！\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//判断客户端发出的请求</span></span><br><span class="line">    <span class="keyword">if</span>(connect(sock, (struct sockaddr*)&amp;(request-&gt;client), addr_len) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"连接到客户端失败！\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Choose handler</span></span><br><span class="line">    <span class="keyword">switch</span>(request-&gt;packet.optcode)&#123;</span><br><span class="line">        <span class="keyword">case</span> OPTCODE_RRQ:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"下载工作已经响应\n"</span>);</span><br><span class="line">            handle_rrq(sock, request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> OPTCODE_WRQ:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"上传工作已经响应\n"</span>);</span><br><span class="line">            handle_wrq(sock, request);</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"错误的操作指令\n"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(request);</span><br><span class="line">    close(sock);</span><br><span class="line">    <span class="comment">//数据传输完成后关闭用于数据传输的socket一起释放所分配的内存空间</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>文件操作函数 handle_rrq//handle_wrq</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * handle_rrq    对应客户端的RRQ请求  接受一个请求报文，发送多个DATA报文</span></span><br><span class="line"><span class="comment"> * @param  request  指向客户端发来请求报文的指针</span></span><br><span class="line"><span class="comment"> * @param  sock   文件描述符 对应服务器端在子线程中用于数据传输的socket</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">handle_rrq</span><span class="params">(<span class="keyword">int</span> sock, struct tftp_request *request)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tftp_packet</span> <span class="title">snd_packet</span>;</span> <span class="comment">//用于封装发送数据的报文结构</span></span><br><span class="line">    <span class="keyword">char</span> fullpath[<span class="number">256</span>];  <span class="comment">//用来存储文件路径</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *根据packet结构体的结构  确定报文传输数据块的大小</span></span><br><span class="line"><span class="comment">     *|-filename-'0'-mode-'0'-blocksize_str-|</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">char</span> *r_path = request-&gt;packet.filename;    <span class="comment">// 需求文件的名字</span></span><br><span class="line">    <span class="keyword">char</span> *mode = r_path + <span class="built_in">strlen</span>(r_path) + <span class="number">1</span>; <span class="comment">//文件模式指针</span></span><br><span class="line">    <span class="keyword">char</span> *blocksize_str = mode + <span class="built_in">strlen</span>(mode) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> blocksize = atoi(blocksize_str);   <span class="comment">//文件的大小</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//限制数据包传送的数据大小，根据tftp的要求，DATASIZE应为512字节</span></span><br><span class="line">    <span class="keyword">if</span>(blocksize &lt;= <span class="number">0</span> || blocksize &gt; DATASIZE)&#123;</span><br><span class="line">        blocksize = DATASIZE;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化文件路径  linux下表示当前目录 "."</span></span><br><span class="line">    <span class="built_in">memset</span>(fullpath, <span class="number">0</span>, <span class="keyword">sizeof</span>(fullpath)); <span class="comment">//清0</span></span><br><span class="line">    <span class="built_in">strcpy</span>(fullpath, conf_document_root);</span><br><span class="line">    <span class="keyword">if</span>(r_path[<span class="number">0</span>] != <span class="string">'/'</span>)&#123;</span><br><span class="line">        <span class="built_in">strcat</span>(fullpath, <span class="string">"/"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcat</span>(fullpath, r_path);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"下载路径: \"%s\", 文件大小：%d\n"</span>, fullpath, blocksize);</span><br><span class="line">    </span><br><span class="line">    FILE *fp = fopen(fullpath, <span class="string">"r"</span>);</span><br><span class="line">    <span class="keyword">if</span>(fp == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"服务器端不存在您需要下载的文件，请检查文件名后重试！\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//发送数据报文</span></span><br><span class="line">    <span class="keyword">int</span> send_size = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        <span class="comment">//每次从文件中读取的数据数 最大512字节 当其不是512字节时表示文件传输完毕</span></span><br><span class="line">    &#125;<span class="keyword">while</span>(send_size == blocksize);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n文件发送完成！\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ; <span class="comment">//退出并报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>文件传输模块的具体需求设计：</p>
+<p>| 函数名          | 函数功能描述                               | 备注                                       |<br>| ————— | —————————————— | —————————————— |<br>| send_ack（）    | 向发送方返回一个确认报文                   | 返回数据大小   -1则错误                    |<br>| send_packet（） | 发送一个TFTP报文    支持DATA报文、请求报文 | 返回数据大小   -1则错误                    |<br>| file_download() | 服务器端文件下载函数   对应客户端的RRQ请求 | 接受一个需求报文，发送多个DATA报文         |<br>| file_upload（） | 服务器端文件上传函数   对应客户端的WRQ请求 | 收并读取多个DATA报文 然后发送相应的ACK报文 |</p>
+</li>
+</ul>
+<ul>
+<li><p>文件目录的读取操作：</p>
+<p>​       读取服务器端当前目录的操作实际上是利用了linux的文件格式的巧妙性。在linux系统中，文件夹的实际数据格式是dir目录文件，在这样的格式下，可以直接调用stat结构体，找到文件目录下的文件列表，传送到客户端即可。</p>
+<p>​       基本流程就是客户端提出请求，服务器端响应请求，并发送目录文件，客户端解析目录文件。</p>
+<ul>
+<li><p>客户端目录操作函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Directory listing.</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">do_list</span><span class="params">(<span class="keyword">int</span> sock, <span class="keyword">char</span> *dir)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r_size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> time_wait_data;</span><br><span class="line">    ushort block = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> blocksize = DATA_SIZE;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Send request.</span></span><br><span class="line">    packet.cmd = htons(CMD_LIST);</span><br><span class="line">    <span class="built_in">strcpy</span>(packet.data, dir);</span><br><span class="line">    sendto(sock, &amp;packet, </span><br><span class="line">           <span class="keyword">sizeof</span>(struct tftpx_packet), </span><br><span class="line">           <span class="number">0</span>,</span><br><span class="line">           (struct sockaddr*)&amp;server, </span><br><span class="line">           addr_len);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"type\tsize\tname\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"-------------------------------------------------\n"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Receive data.</span></span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        <span class="comment">//停等协议</span></span><br><span class="line">    &#125;<span class="keyword">while</span>(r_size == blocksize + <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务器端目录操作函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">handle_list</span><span class="params">(<span class="keyword">int</span> sock, struct tftpx_request *request)</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span> fullpath[<span class="number">256</span>];</span><br><span class="line">    <span class="keyword">char</span> data_buf[LIST_BUF_SIZE + <span class="number">256</span> + <span class="number">32</span>];</span><br><span class="line">    <span class="keyword">char</span> *r_path = request-&gt;packet.data;    <span class="comment">// request path</span></span><br><span class="line">    <span class="keyword">int</span> data_size;    <span class="comment">// Size of data in data_buf[]</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tftpx_packet</span> <span class="title">packet</span>;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// build fullpath</span></span><br><span class="line">    <span class="built_in">memset</span>(fullpath, <span class="number">0</span>, <span class="keyword">sizeof</span>(fullpath));</span><br><span class="line">    <span class="built_in">strcpy</span>(fullpath, conf_document_root);</span><br><span class="line">    <span class="keyword">if</span>(r_path[<span class="number">0</span>] != <span class="string">'/'</span>)&#123;</span><br><span class="line">        <span class="built_in">strcat</span>(fullpath, <span class="string">"/"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcat</span>(fullpath, r_path);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"List %s\n"</span>, fullpath);</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">stat_buf</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">dirent</span>;</span></span><br><span class="line">    DIR *dp;</span><br><span class="line">    </span><br><span class="line">    stat(fullpath, &amp;stat_buf);</span><br><span class="line">    <span class="keyword">if</span>(!S_ISDIR(stat_buf.st_mode))&#123;</span><br><span class="line">        <span class="comment">//不是目录文件</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span> *ptr = fullpath + <span class="built_in">strlen</span>(fullpath);</span><br><span class="line">    data_size = <span class="number">0</span>;</span><br><span class="line">    dp = opendir(fullpath);</span><br><span class="line">    <span class="comment">// fill dir list buffer</span></span><br><span class="line">    <span class="keyword">while</span>((dirent = readdir(dp)) != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(dirent-&gt;d_name, <span class="string">"."</span>) == <span class="number">0</span> || <span class="built_in">strcmp</span>(dirent-&gt;d_name, <span class="string">".."</span>) == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ptr[<span class="number">0</span>] = <span class="string">'/'</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(ptr + <span class="number">1</span>, dirent-&gt;d_name);</span><br><span class="line">        *(ptr + <span class="number">1</span> + <span class="built_in">strlen</span>(dirent-&gt;d_name)) = <span class="string">'\0'</span>;</span><br><span class="line">        stat(fullpath, &amp;stat_buf);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">char</span> mod = S_ISDIR(stat_buf.st_mode)? <span class="string">'d'</span> : <span class="string">'f'</span>;    <span class="comment">//</span></span><br><span class="line">        data_size += <span class="built_in">sprintf</span>(data_buf + data_size,</span><br><span class="line">                             <span class="string">"%c\t%d\t%s\t\n"</span>,</span><br><span class="line">                             mod, (<span class="keyword">int</span>)stat_buf.st_size, dirent-&gt;d_name);</span><br><span class="line">        <span class="keyword">if</span>(data_size &gt;= LIST_BUF_SIZE)&#123;</span><br><span class="line">            <span class="comment">// Too much files in a directory!</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"SEND_BUF_SIZE too small!\n"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//发送数据包</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>简单实现断网重传</p>
+<p>​       本来的目的是为了实现断点重传，但是断点重传的实现方式不仅难于目前的项目水准，而且需要对文件操作模式进行较大的改变。在这样的基础上，我决定在TFTP短文件的基础上，直接报错删除未传完的文件，要求客户端重新传送。</p>
+<ul>
+<li><p>删除代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( remove(filename) == <span class="number">0</span> )</span><br><span class="line">&#123;     <span class="comment">// 调用remove函数删除指定文件</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"移除 %s文件。\n"</span>, filename);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"移除 %s文件失败。\n"</span>, filename);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送错误ACK包</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send error packet</span></span><br><span class="line">ack_packet.optcode = htons(OPTCODE_ACK);</span><br><span class="line">ack_packet.errcode = htons(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端响应</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//等待服务器端发来的ACK 用来响应客户端的请求</span></span><br><span class="line"><span class="keyword">for</span> (time_wait_counter = <span class="number">0</span>; </span><br><span class="line">     time_wait_counter &lt; MAX_TIME_WAIT; </span><br><span class="line">     time_wait_counter += <span class="number">20000</span>)</span><br><span class="line">&#123;</span><br><span class="line">   recv_size = recvfrom(sockfd, </span><br><span class="line">                        &amp;recv_packet, </span><br><span class="line">                        <span class="keyword">sizeof</span>(struct tftp_packet), </span><br><span class="line">                        MSG_DONTWAIT,</span><br><span class="line">                        (struct sockaddr *)&amp;client,</span><br><span class="line">                        &amp;addr_len);</span><br><span class="line">    <span class="keyword">if</span> (recv_size &gt; <span class="number">0</span> &amp;&amp; recv_size &lt; <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"没有收到服务器端的响应报文，请等待重传！\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((recv_size &gt;= <span class="number">4</span>) &amp;&amp; </span><br><span class="line">        (recv_packet.optcode == htons(OPTCODE_ACK)) &amp;&amp; </span><br><span class="line">        (recv_packet.block == htons(<span class="number">0</span>)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"收到服务服务器端发来的对应客户端上传请求的ACK报文！\n"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((recv_size &gt;= <span class="number">4</span>) &amp;&amp; </span><br><span class="line">        (recv_packet.optcode == htons(OPTCODE_ACK)) &amp;&amp; </span><br><span class="line">        (recv_packet.block == htons(<span class="number">1</span>)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"收到error报文,文件已存在，请重新发送！\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    usleep(<span class="number">20000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (time_wait_counter &gt;= MAX_TIME_WAIT)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"接收请求的ACK报文超时！\n"</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/16/linux环境下基于TFTP协议下的文件传输项目/" data-id="cjl57ur5q0003lzs6ysv5uc1e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/17/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/03/js面向对象/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js面向对象笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/17/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/16/linux环境下基于TFTP协议下的文件传输项目/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/03/js面向对象/">js面向对象笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/03/利用hexo+github搭建个人静态博客/">利用hexo+github搭建个人静态博客</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/06/我的html笔记/">html初学笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yaoyee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
