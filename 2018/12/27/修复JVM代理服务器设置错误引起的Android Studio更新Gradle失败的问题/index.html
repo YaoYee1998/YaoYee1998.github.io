@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Yaoyee"><link rel="alternative" href="/atom.xml" title="I'm Yaoyee" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title> - I'm Yaoyee</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">I'm Yaoyee</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">カタログ/（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-12-26T16:36:15.468Z">December 27, 2018</time><h1 class="post__title"><a href="/2018/12/27/修复JVM代理服务器设置错误引起的Android Studio更新Gradle失败的问题/"></a></h1><div class="post__main echo"><hr>
+<p>title：修复JVM代理服务器设置错误引起的Android Studio更新Gradle失败的问题</p>
+<hr>
+<p>打开Android8.0编程界面，需要同步Gradle，下载速度极慢</p>
+<p>两种解决办法：</p>
+<p>1、build.gradle里的buildscript和allprojects添加阿里镜像</p>
+<p>repositories {<br>​       maven{ url ‘<a href="http://maven.aliyun.com/nexus/content/groups/public/&#39;}" target="_blank" rel="noopener">http://maven.aliyun.com/nexus/content/groups/public/&#39;}</a><br>​    }</p>
+<p>2、setting里HTTP proxy里设置HTTP代理：</p>
+<p>大连东软信息学院镜像服务器地址:</p>
+<ul>
+<li><a href="http://mirrors.neusoft.edu.cn" target="_blank" rel="noopener">http://mirrors.neusoft.edu.cn</a> 端口：80<br>北京化工大学镜像服务器地址:</li>
+<li>IPv4: <a href="http://ubuntu.buct.edu.cn/" target="_blank" rel="noopener">http://ubuntu.buct.edu.cn/</a> 端口：80</li>
+<li>IPv4: <a href="http://ubuntu.buct.cn/" target="_blank" rel="noopener">http://ubuntu.buct.cn/</a> 端口：80</li>
+<li>IPv6: <a href="http://ubuntu.buct6.edu.cn/" target="_blank" rel="noopener">http://ubuntu.buct6.edu.cn/</a> 端口：80<br>上海GDG镜像服务器地址:</li>
+<li><a href="http://sdk.gdgshanghai.com" target="_blank" rel="noopener">http://sdk.gdgshanghai.com</a> 端口：8000</li>
+</ul>
+<hr>
+<p>到Android Studio的Preferences去查看HTTP Proxy，才发现有黄色的警告框。</p>
+<blockquote>
+<p>You have JVM property “https.proxyHost” set to …. This may lead to incorrect behavior. Proxy should be set in Settings|HTTP Proxy</p>
+</blockquote>
+<p>可能是自动下载Android studio的时候里面把代理给改了，Google了两种解决办法。</p>
+<p>1 去系统设置里面修改</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/3681664-7e25d1d294a21cfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/668" alt="img"></p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/3681664-c976f20b60f84803.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/595" alt="img"></p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/3681664-bdbefcc631b453e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/415" alt="img"></p>
+<p>另：在系统偏好-》网络-》找到对应的连接网络-》高级-》代理中去除勾选解决。（似乎不太靠谱，因为当时是开着蓝灯，在去除后AS中错误提示是没了，但是蓝灯是用不了）</p>
+<p>2 命令行清空</p>
+<p>根据stackOverflow 上的回答，打开终端，输入指令:JAVA_OPTS=”$JAVA_OPTS -DsocksProxtPort” </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS=&quot;$JAVA_OPTS -DsocksProxtPort”</span><br></pre></td></tr></table></figure>
+<p>之后AS </p>
+<p>File-&gt;invalitDate caches/restart 之后就差不多好使了。详情可以点击<a href="https://stackoverflow.com/questions/35520337/how-to-remove-jvm-property-https-proxyhost" target="_blank" rel="noopener">这个链接</a>。</p>
+<p>AndroidStudio File-&gt;invalitDate caches/restart</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/95771-e70acbcb01a15cd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/95771-a7eec02daa879731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 Yaoyee</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
