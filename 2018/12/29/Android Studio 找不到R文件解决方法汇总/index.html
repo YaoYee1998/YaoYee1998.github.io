@@ -1,22 +1,22 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Yaoyee"><link rel="alternative" href="/atom.xml" title="I'm Yaoyee" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>Android Studio 找不到R文件解决方法汇总 - I'm Yaoyee</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">I'm Yaoyee</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">カタログ/（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-12-29T08:03:35.207Z">December 29, 2018</time><h1 class="post__title"><a href="/2018/12/29/Android Studio 找不到R文件解决方法汇总/">Android Studio 找不到R文件解决方法汇总</a></h1><div class="post__main echo"><h1 id="Android-Studio-找不到R文件解决方法汇总"><a href="#Android-Studio-找不到R文件解决方法汇总" class="headerlink" title="Android Studio 找不到R文件解决方法汇总"></a>Android Studio 找不到R文件解决方法汇总</h1><p>一、新建的Activity中R文件找不到，其他文件中的R文件可以正常使用。<br>解决方法：在该Activity中引入R包即可：import com.example.zcj.password.R;</p>
-<p><img src="https://img-blog.csdnimg.cn/20181028160155730.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZobDEzMDE3NTk5OTUy,size_27,color_FFFFFF,t_70" alt="img"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzby34xabaj30tb0a50uw.jpg" alt="1"></p>
 <p>在子目录下新建Activity文件都会出现这个问题，可以通过设置自动导入包：File-Settings-Editor-General-Auto Import，将Optimize imports on the fly和Add unambiguous imports on the fly勾选即可。</p>
-<p><img src="https://img-blog.csdnimg.cn/20181028160308368.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZobDEzMDE3NTk5OTUy,size_27,color_FFFFFF,t_70" alt="img"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzby3ucyeuj30t90jjmzf.jpg" alt="2"></p>
 <p>二、新导入的项目找不到R文件（所有文件都找不到R文件），<br>解决方法：Android Studio-Build-Clean Project-Rebuild Project;  Rebuild之后，AS中会显示错误信息，根据提示修改即可。</p>
 <p>方法二：</p>
 <blockquote>
 <p>第一步：检查xml文件，R文件错误通常是由于我们的xml文件有问题，首先把xml文件的错误排除掉，然后进行下一步</p>
 <p>第二步：MainActivity.java同包下新建一个类，这个类起名为R.class</p>
 </blockquote>
-<p><img src="https://img-blog.csdn.net/20150706230408883" alt="img"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzby4jmvzfj30hi068jrr.jpg" alt="3"></p>
 <blockquote>
 <p>这时我们发现项目中的R文件错误已经没有了！</p>
 </blockquote>
-<p><img src="https://img-blog.csdn.net/20150706230442453" alt="img"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzby5a77e8j30ku03gq3o.jpg" alt="5"></p>
 <blockquote>
 <p>第三步：运行项目；我们发现我们的R文件自动生成出来了！</p>
 </blockquote>
-<p><img src="https://img-blog.csdn.net/20150706230548322" alt="img"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzby68zxtcj30ua0men33.jpg" alt="6"> </p>
 <blockquote>
 <p>但是还是有一点错误；所以有了第四步；</p>
 <p>第四步：删除刚才我们自己建的R.class类。此时项目就没问题了！</p>
