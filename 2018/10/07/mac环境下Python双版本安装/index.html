@@ -6,43 +6,43 @@
 <h2 id="STEP-3-安装Python"><a href="#STEP-3-安装Python" class="headerlink" title="STEP 3 安装Python"></a>STEP 3 安装Python</h2><p>接下来要正式进入安装Python的步骤了！<br>首先，输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version1</span><br></pre></td></tr></table></figure>
 <p>会有如下结果：</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hHpy8.png" alt="9hHpy8.png"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf6ltf0vj306q01kq2t.jpg" alt="9hHpy8.png"></p>
 <p>这是Mac系统要使用的Python，不去动它。所以现在我们要用homebrew来安装自己使用的Python。</p>
 <p>利用homebrew搜索Python</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search python1</span><br></pre></td></tr></table></figure>
 <p>会有如下结果：</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hHYSx.png" alt="9hHYSx.png"></p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fzdf6pjsobj30fi06mjs7.jpg" alt="9hHYSx.png"></p>
 <p>开始安装：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install python1</span><br></pre></td></tr></table></figure>
 <p>如图所示，表示python2安装成功</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hbH5d.png" alt="9hbH5d.png"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf6s7haqj30fw0a0jsu.jpg" alt="9hbH5d.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install python31</span><br></pre></td></tr></table></figure>
 <p>如图所示，表示python3安装成功</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hbXxP.png" alt="9hbXxP.png"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf6vjh4sj30dn07tq3u.jpg" alt="9hbXxP.png"></p>
 <p>查看安装的目录</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open /usr/local/Cellar/1</span><br></pre></td></tr></table></figure>
-<p><a href="https://imgchr.com/i/9hqVMV" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2018/03/14/9hqVMV.md.png" alt="9hqVMV.md.png"></a></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf8iny6mj30iw0ds0xw.jpg" alt="7"></p>
 <h2 id="STEP-4-设定路径-PATH-不和系统Python干扰"><a href="#STEP-4-设定路径-PATH-不和系统Python干扰" class="headerlink" title="STEP 4 设定路径$PATH (不和系统Python干扰)"></a>STEP 4 设定路径$PATH (不和系统Python干扰)</h2><p>什么是路径$PATH呢？</p>
 <p>还记得我们在装Python的时候，输入了brew，<br>系统就自动会知道要开始跑homebrew。<br>系统到底怎么知道我们的brew在哪里？<br>这就是$PATH的用途了！</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH1</span><br></pre></td></tr></table></figure>
 <p>如图所示</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hqYqO.png" alt="9hqYqO.png"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf8mu1t8j30fz02vdg5.jpg" alt="9hqYqO.png"></p>
 <p>分号(:)是分隔的意思<br>所以当你在terminal里面输入brew时<br>系统就会开始从/usr/bin找起<br>如果在/usr/bin里面找不到的话<br>就会往下一个/bin去搜寻，以此类推</p>
 <p>现在，我们回到文件夹去看<br>brew其实就在/usr/local/bin里面</p>
-<p><a href="https://imgchr.com/i/9hqgeS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2018/03/14/9hqgeS.md.png" alt="9hqgeS.md.png"></a></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzdf9qpvhvj30iw0ai0wz.jpg" alt="10"></p>
 <p>所以现在的问题就是，系统在/usr/bin里面也有一份Python<br>现在我们在/usr/local/Cellar里面也装了Python<br>这样在terminal打上python指令时，谁会被开启呢？<br>因为路径有顺序，所以它会先找到系统的Python<br>现在就要来解决这个问题</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo emacs /etc/paths1</span><br></pre></td></tr></table></figure>
 <p>sudo让我们取得管理员权限<br>用emacs这个程序编辑路径档案<br>terminal会要求输入密码</p>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hqvWR.png" alt="9hqvWR.png"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzdf9vs7b3j308v07a3yk.jpg" alt="9hqvWR.png"></p>
 <p>如果不是这个顺序，调整成这个顺序。</p>
 <p>control + k：把一行字剪下来<br>control + y：把字粘贴<br>control + x + s：存盘<br>control + x + c：关掉emacs</p>
 <p>这时，重启terminal 会看到变化，再打一次</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH1</span><br></pre></td></tr></table></figure>
 <h3 id="STEP-5-安装完成，确认结果"><a href="#STEP-5-安装完成，确认结果" class="headerlink" title="STEP 5 安装完成，确认结果"></a>STEP 5 安装完成，确认结果</h3><p>这样就完成啰！<br>其实python3本身比较不会跟其他人打架<br>因为他就是独立的python3<br>所以我们主要是要确认是不是读到我们用brew装的python</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which python1</span><br></pre></td></tr></table></figure>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hLUXV.png" alt="9hLUXV.png"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzdf9zizfcj305y02eq2t.jpg" alt="9hLUXV.png"></p>
 <p>如图所示带便安装成功。</p>
 <p>如果想使用系统的Python，就输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/python1</span><br></pre></td></tr></table></figure>
-<p><img src="https://s1.ax1x.com/2018/03/14/9hOij0.png" alt="9hOij0.png"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzdfa2ppjyj30e802r74h.jpg" alt="9hOij0.png"></p>
 </div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 Yaoyee</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
