@@ -1,0 +1,637 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Yaoyee"><link rel="alternative" href="/atom.xml" title="I'm Yaoyee" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>PHP初学笔记 - I'm Yaoyee</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">I'm Yaoyee</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">カタログ/（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2019-01-30T14:59:53.430Z">January 30, 2019</time><h1 class="post__title"><a href="/2019/01/30/PHP初学笔记/">PHP初学笔记</a></h1><div class="post__main echo"><p>####什么是PHP</p>
+<p>php是 PHP:Hypertext Preprocessor（超文本预处理器）的缩写，是一种服务器端、跨平台、HTML嵌入的脚本语言。是B/S三层服务结构.</p>
+<p>PHP可以单独运行，也可以镶嵌到HTML当中，执行都在服务器端</p>
+<p>######相关术语：</p>
+<ul>
+<li>LAMP： 基于linux Apache MySQL PHP的语言插件运行环境</li>
+<li><p>Apache:  Apache是世界使用排名第一的Web服务器。它可以运行在几乎所有广泛使用的[系统平台上，它快速、可靠并且可通过简单的API扩充，将Perl/Python等解释器编译到服务器中。</p>
+</li>
+<li><p>MySQL： 开源的小型关系数据库</p>
+</li>
+<li>SSL： 网景公司开发在保障数据传输安全的数据加密技术</li>
+<li>Pecl：通过PEAR打包过后的PHP扩展库</li>
+</ul>
+<p>####配置LAMP系统环境</p>
+<p>在Mac环境下系统本身就带有的Apache和PHP都预装好了</p>
+<p>第一步: 用于查看系统预装的Apache和PHP版本:</p>
+<p>(1)打开终端,输入命令:sudo apachectl -version</p>
+<p>(2)输入命令：sudo php -v<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzfiepoie9j30pk0bamzu.jpg" alt="image-20190122175235420"></p>
+<p>第二步：修改Apache配置文件</p>
+<p>（1）前往Finder,输入地址：/private/etc/apache2</p>
+<p>（2）找到名为 httpd.conf 的文件，选择Subline打开.<br>    (因为此文件为locked不允许被修改.所以,我们可以将其复制到桌面上,修改后将原文件删掉,再将修改后的文件移到原文件的位置)<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzfihf6ivnj30zk0rwgwj.jpg" alt="image-20190122175510479"></p>
+<p>（3）打开后使用搜索关键字“php” ，搜索结果如图所示:<br>（4）删除这行文本最前面的那个“#”号，删除后保存一下，关闭文档</p>
+<p>第三步：生成PHP配置文件<br>（1）前往Finder,输入地址：/private/etc  ，在这个目录下找到一个名为 php.ini.default 的文件. 将这个文件复制一下，仍然拷贝到当前目录下，然后将新拷贝的文件重命名为 php.ini,</p>
+<p>第四步：重启Apache服务<br>(1)打开终端,输入命令: sudo apachectl restart<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzfijacf4wj319y0u0dkk.jpg" alt="image-20190122175650389"><br>( 此时打开 <a href="http://localhost" target="_blank" rel="noopener">http://localhost</a>: 网页会显示it works!)</p>
+<p>第五步: 测试运行PHP文件<br>（1）前往Finder,输入地址：/Library/WebServer(手动开启读写权限）</p>
+<p>（2） 在 Documents 文件夹下（这就是服务器的根路径）创建一个名为 index.php 的文件(名字随便起，为了测试)，在里面写如下php的代码，保存一下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">  phpinfo();</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>（3）打开浏览器访问我们刚才创建的文件，在地址栏输入：<a href="http://localhost/index.php" target="_blank" rel="noopener">http://localhost/index.php</a>, 如图所示,则成功:</p>
+<p><img src="../Library/Application Support/typora-user-images/image-20190122175820227.png" alt="image-20190122175820227"></p>
+<p>####PHP标记风格</p>
+<ul>
+<li>XML风格，该风格在XML HTML中都可以使用，服务器不能禁用</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>       XML风格      <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>脚本风格</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">"php"</span>&gt;  脚本风格  &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简短风格</li>
+<li>ASP风格</li>
+</ul>
+<h5 id="注释风格"><a href="#注释风格" class="headerlink" title="注释风格"></a>注释风格</h5><ul>
+<li>单行注释       //</li>
+<li>多行注释      /*</li>
+<li>文档注释      每一行都有*</li>
+</ul>
+<p>####数据类型</p>
+<ul>
+<li><p>标量数据类型：</p>
+<ul>
+<li>boolean 最简单的布尔型 （空白字符串，0，没有赋值的数组也是false）</li>
+<li>string 字符串类型，可以是计算机算能标示的一切字符的组合</li>
+<li>integer 整型 （整型溢出：超出了int的最大范围用float表示）</li>
+<li>float 浮点型 浮点型只是一个近似值，尽量避免浮点数之间比较大小</li>
+</ul>
+</li>
+<li><p>复合数据类型：</p>
+<ul>
+<li>array 数组  类型相同的变量集合</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$array = <span class="keyword">array</span>(<span class="string">'value'</span>)</span><br><span class="line">$array[key] = <span class="string">''</span>value</span><br><span class="line">$array = <span class="keyword">array</span>(key =&gt; value)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>object 对象：类的实例</li>
+</ul>
+</li>
+<li><p>特殊数据类型</p>
+<ul>
+<li><p>resource 资源（句柄）通过专门的函数来建立和使用（具有自动垃圾回收机制）</p>
+</li>
+<li><p>null 空值  表示变量没有数值，唯一的值就是null（不区分大小写）</p>
+<p>没有赋值、被赋值null、unset()处理过</p>
+</li>
+</ul>
+</li>
+<li><p>常量的声明与使用</p>
+<ul>
+<li>define（）函数定义常量，参数：常量名、常量值、是否大小写敏感（ture为不敏感）</li>
+<li>获取常量值：直接使用常量名，使用constant（）函数</li>
+</ul>
+</li>
+<li><p>变量声明与赋值</p>
+</li>
+<li><p>变量用$和标识符表示，不能以数字开头并区分大小写</p>
+</li>
+<li><p>直接赋值，变量间赋值，引用赋值（&amp;）</p>
+<p>复制会开辟新的内存空间，但是引用就是原地址的一个别名</p>
+</li>
+<li><p>作用域  </p>
+<ul>
+<li><p>局部变量：函数内部定义的变量</p>
+</li>
+<li><p>全局变量：作用域是整个PHP文件</p>
+<p>全局变量可以在程序的人和地方访问，但是在用户自定义函数中需要用global关键字声明</p>
+</li>
+<li><p>静态变量：调用结束后还能保留原值，使用static来声明</p>
+</li>
+</ul>
+</li>
+<li><p>可变变量：</p>
+<p>允许动态改变一个变量的名字，由另外一个变量来确定</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="string">"b"</span>;  $b = <span class="string">"c"</span>; $$a =&gt; c</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#####PHP运算符</p>
+<ul>
+<li><p>算数运算符：加、减、乘、除、取余</p>
+</li>
+<li><p>字符串运算符:  .    使用“.”运算符可以把两个字符串连接起来</p>
+</li>
+<li><p>赋值运算符： </p>
+<ul>
+<li>逻辑运算符：&amp;&amp;(and)、||(or)、xor(逻辑异或)、！</li>
+</ul>
+</li>
+<li><p>位运算符：二进制从低位到高位对齐后运算  &amp;(与)、|(或)、^(异或)、～(取反)</p>
+</li>
+<li><p>条件运算符（三目运算符）（最好放在括号里判断）？&lt;正确&gt;:&lt;错误&gt;</p>
+</li>
+<li><p>递增运算符： ++$a  先加再赋值</p>
+<p>​                        $a++  先赋值再加</p>
+</li>
+</ul>
+<p>#####函数</p>
+<ul>
+<li><p>传递参数</p>
+<ul>
+<li>值传递  函数操作和返回不会影响到实参</li>
+<li>引用传递   将实参的内存地址传递到形参当中，会影响实参的值</li>
+<li>默认参数 设置可选参数，并设置默认值（必须放在非默认参数的右侧）</li>
+</ul>
+</li>
+<li><p>函数返回值：return将函数的值返回给调用者，程序控制权也随之返回，全局内return即退出。return只能返回一个参数。</p>
+</li>
+<li>变量函数： 可以通过声明变量来访问不同的函数，变量名后面加上小括号，php即自动寻找相同的函数并执行。</li>
+</ul>
+<p>#####常用命名规则</p>
+<ul>
+<li>类命名：首字母大写，不使用下划线，大写字母作为每个词的分割</li>
+<li>类属性：小写m+类名</li>
+<li>方法：Is（判断）Get（得到）Set（设置）</li>
+<li>方法属性：驼峰命名法</li>
+<li>变量：所有字母小写并使用“_”作为分割</li>
+<li>引用变量：r前缀；静态变量：s前缀</li>
+<li>常量／全局变量：全部大写，用“_“分割</li>
+</ul>
+<p>#####foreach语句</p>
+<p>遍历数组$array，每次循环将当前数组的数值赋给 \$value</p>
+<p>具体形式：foreach ($array as  \$value)</p>
+<p>​                    foreach ($array as  \$key =&gt; \$value)</p>
+<p>#####跳转语句</p>
+<ul>
+<li>break ——break $num 可以指定跳出第几层循环 </li>
+<li>continue 终止本次循环而进入下一次循环，同样可以指定跳出几层循环 </li>
+</ul>
+<p>####字符串详解</p>
+<ul>
+<li><p>单引号和双引号</p>
+<p>双引号的内容是经过PHP语法分析器解析过的，任何变量都转换为实际的值输出</p>
+<p>但是单引号是“所见即所闻”，无论有没有变量都作为普通字符串输出</p>
+</li>
+<li><p>内建函数</p>
+<ul>
+<li>trim( )  去除字符串首处的空白字符</li>
+<li>ltrim( )  去除左边的空格和特殊字符</li>
+<li>rtrim( )  去除字符串右边的空格和特殊字符</li>
+</ul>
+</li>
+<li><p>转义、还原字符串</p>
+<ul>
+<li>addslashes( ) 使用反斜线引用字符串（特定符号前加\）</li>
+<li>stripslashes( )  反引用一个引用字符串 (去除特定符号的\)</li>
+</ul>
+</li>
+<li><p>获取字符串长度strlen( )  </p>
+<p> 汉字两个字符，数字、英文、小数点、下划线、空格占一个字符</p>
+</li>
+<li><p>截取字符串 substr( )    –字符串下标从0开始</p>
+</li>
+<li><p>strcmp( ) 比较字符串  相等返回0 ，前者大返回正值，后者大返回负值</p>
+<p>strcmp( ) 区分大小写.   strcasecmp( ) 不区分字符大小写 </p>
+</li>
+<li><p>按自然排序法进行比较——strnatcmp( )</p>
+</li>
+<li><p>检索字符串strstr( ) 获取后者在前者字符串中首次出现到前者末尾的字符串</p>
+<p>strrchr( )从字符串后序的位置开始检索</p>
+</li>
+<li><p>substr_count(  ). 获取指定字符在字符串中出现的次数</p>
+</li>
+<li><p>替换字符串  str_ireplace(要检索的词，要替换的词，被检索的字符串，替换的个数)</p>
+<p>这一函数比较常见用来“关键字描红”</p>
+</li>
+<li><p>分割字符串 explode(分割的边界字符，被分割的字符串 )</p>
+</li>
+<li>合成字符串 implode(分隔的边界符，要被合并的数组 )</li>
+</ul>
+<p>####正则表达式</p>
+<p>正则表达式是一种用来描述字符串结构的处语法规则，是与1个特定的格式化字符串，可以匹配、替换、截取字符串，一个完整的正则表达式由元字符和文本字符构成。</p>
+<ul>
+<li><p>行定位符：描述字符串的边界</p>
+<p>“^”表示行的开始     “$”标示行的结尾</p>
+</li>
+<li><p>单词分界符   \b匹配的必须是一个完整的单词\b    \B匹配的不能是一个完整的单词\B</p>
+</li>
+<li><p>方括号表达式   “[]”匹配字符出现在括号内即表示匹配成功，例如[Tt]可以忽略t的大小写问题，但是一个方括号只能匹配一个字符</p>
+</li>
+<li>选择字符( | )  该字符可以理解为或</li>
+<li>连字符( - )  可以表示字符的范围，例如[A-Z]</li>
+<li><p>排除字符 “^”在方括号种表示排除的意思，匹配不符合命名规则的变量 </p>
+</li>
+<li><p>限定符：？   匹配前面的字符串0次或一次</p>
+<p>​               +     匹配前面的字符串一次或者多次 </p>
+</li>
+</ul>
+<p>​                      *     匹配前面的字符串零次或者多次</p>
+<p>​                     {n}   匹配前面的字符串n次</p>
+<p>​                     {n,}   匹配前面的字符串最少n次</p>
+<p>​                     {n,m}   匹配前面的字符串最少n次，最多m次</p>
+<ul>
+<li><p>点号字符( . )  匹配出换行符外的任意一个字符</p>
+</li>
+<li><p>反向引用 ( \num )依靠子表达式的“记忆功能”匹配连续出现的出字符串或字母</p>
+<p>定义分组名(?P\<subname>)    反向引用该分组 (?P=subname)</subname></p>
+</li>
+<li><p>模式修饰符</p>
+<p>(?i)……(?-i)           忽略大小写模式</p>
+<p>(?M)……(?-M)      多文本模式</p>
+<p>(?s)……(?-s)         单文本模式，此模式下，元字符点号可以匹配换行符</p>
+<p>(?X)……(?-X)        忽略空白字符</p>
+</li>
+</ul>
+<p>#####PCRE兼容正则表达式函数</p>
+<ul>
+<li>preg_grep(pattern, input ) 使用数组input中的元素一一匹配pattern，并返回结果数组</li>
+<li>preg_match( )  函数返回匹配的次数，一般返回0和1，因为匹配成功就停止（定性）</li>
+<li>preg_match_all(  ) 一直匹配并存储matchs数组（定量）</li>
+<li>preg_quote( )  将参数中的字符自动转义</li>
+<li>preg_spilt(pattern, string, subject) 使用pattern分隔字符串subject</li>
+</ul>
+<p>####数组</p>
+<ul>
+<li><p>声明数组   array( key =&gt; value)   省略索引则直接从0开始   或者直接赋值</p>
+</li>
+<li><p>数组类型</p>
+<ul>
+<li><p>索引数组   默认从0开始自动赋值，自增数字序列</p>
+</li>
+<li><p>关联数组   键名可以是数值和字符的混合形式</p>
+</li>
+</ul>
+</li>
+<li><p>数组打印  print_r(  ) 输出数组结构   echo和print 直接输出数组项的某一个元素</p>
+</li>
+<li><p>遍历数组  foreach() 并非操作数组本身而是数组的一个备份</p>
+<p>​                  list( )  可用于下标从0开始的数字索引数组</p>
+</li>
+<li><p>字符串与数组的转换</p>
+<ul>
+<li>explode( )  用separator字符串分隔切开，返回响应的 子字符串数组</li>
+<li>implode(分隔符，数组名)  将数组组成字符串并用分隔符隔开</li>
+</ul>
+</li>
+<li><p>统计数组个数   count( ).      count($array, COUNT_RECURSIVE) 递归统计（一维数组+二维数组）</p>
+</li>
+<li><p>查询数组中的指定元素 array_search(要搜索的元素名称，给定的数组)</p>
+</li>
+<li>获取最后一个元素：array_pop( ) 获取并返回最后一个元素，总长度减1，数组为空返回false</li>
+<li>增加元素: array_push(数组，元素) 加入元素到末尾，长度增加，返回新的长度</li>
+<li>删除重复元素: array_unique </li>
+</ul>
+<p>#####表单数据</p>
+<ul>
+<li>表单\<form></form></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;form name=<span class="string">"form_name"</span> method=<span class="string">"method"</span> action=<span class="string">"check_ok.php"</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:left">表单的名称</td>
+</tr>
+<tr>
+<td style="text-align:center">method</td>
+<td style="text-align:left">设置表单的提交方式</td>
+</tr>
+<tr>
+<td style="text-align:center">action</td>
+<td style="text-align:left">指向处理表单的URL，指定表单在提交的时候将内容发往何处进行处理</td>
+</tr>
+<tr>
+<td style="text-align:center">target</td>
+<td style="text-align:left">设置返回信息的显示方式（新窗口、父级窗口、当前、顶级）</td>
+</tr>
+<tr>
+<td style="text-align:center">enctype</td>
+<td style="text-align:left">返回表单内容的编码方式</td>
+</tr>
+</tbody>
+</table>
+<p>GET是将表单内容附加在URL的地址之后发送，POST是将表单中的信息作为数据块发送到服务器（安全）</p>
+<p>method属性的默认方法是GET</p>
+<p>使用form表单的时候，必须指定其行为属性action</p>
+<ul>
+<li>输入域标记\<input></li>
+</ul>
+<p>type = text、password、file、image、radio(单选)、checkbox(复选)、submit、reset、button、hidden</p>
+<ul>
+<li>选择域标记\<select>和\<option></option></select></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;select name = <span class="string">"spec"</span> id = <span class="string">"spec"</span>&gt;</span><br><span class="line">	&lt;option value = <span class="string">"0"</span> selected&gt;网络编程&lt;/option&gt;</span><br><span class="line">	&lt;option value = <span class="string">"1"</span>&gt;面向对象编程&lt;/option&gt;</span><br><span class="line">	&lt;option value = <span class="string">"1"</span>&gt;面向过程变成&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<p>​     name是选择域的名字，size表示行数，value是惨淡选项值，selected表示默认被选中</p>
+<ul>
+<li>文字域标记  \<textarea></textarea></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea name = <span class="string">"name"</span> rows =value cols = vlaue value =<span class="string">"value"</span> wrap = <span class="string">"value"</span> &gt;</span><br><span class="line">		文本内容</span><br><span class="line">&lt;/textarea&gt;</span><br></pre></td></tr></table></figure>
+<p>name: 名称   rows:行数    cols:列数    value:默认值    wrap:换行方式：off 不换行、hard硬换行、soft软换行</p>
+<p>HTML标记在获取多行编辑框的字符串的时候并不会显示换行标记，需要使用nl2br()将“\n”替换成”\<br>“</p>
+<ul>
+<li><p>获取表单数据</p>
+<ul>
+<li><p>POST方法</p>
+<p>不依赖于URL，不会显示在地址栏，可以没有限制的传递数据到服务器</p>
+</li>
+<li><p>GET方法</p>
+<p>form表单method的默认方法，表单数据被附加在URL之后并作为URL的一部分发送到服务端</p>
+<p>url和表单元素之间用？隔开，多个表单元素之间用&amp;隔开</p>
+<p>URL的长度应限制在1MB字符以内</p>
+</li>
+</ul>
+</li>
+<li><p>参数传递方法</p>
+<ul>
+<li><p>$_SESSION[ ]获取文本框元素，保存之后任何页面都可以使用，非常占用内存资源</p>
+</li>
+<li><p>$_POST[ ] 获取表单元素和 \$_GET[ ] 获取URL元素</p>
+<p>获取表单元素大小写敏感，需要和表单名称一一对应</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>#####URL编码</p>
+<ul>
+<li><p>编码</p>
+<p>一种浏览器用来打包表单输入数据的格式，对地址栏传递参数进行编码，起到了隐藏的作用</p>
+<p>编码主要采用 urlencode( )函数对字符串编码</p>
+</li>
+<li><p>解码— urldecode</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"id"</span>]))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"您提交的查询字符串的内容是："</span>.urldecode($_GET[<span class="string">"id"</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#####时间设置</p>
+<ul>
+<li><p>时区设置</p>
+<p>PHP5 对data()函数进行了重写，采用的是标准的格林尼治时间（零时区）</p>
+<ul>
+<li>修改php.ini文件当中的设置，修改【date】下的”date:timezone=”的选项</li>
+<li>在使用日期函数之前添加 data_default_timezone_set(timezone) 函数</li>
+</ul>
+</li>
+<li><p>本地化时间戳</p>
+<p>mktime（hour、minute、second、month、day、year、夏令时is_dst）返回unix时间戳</p>
+</li>
+<li><p>当前时间戳 采用time()函数获取当前时间戳，然后采用date()格式化成标准时间格式</p>
+</li>
+<li><p>date(格式 + 时间戳) ，时间戳参数timestamp 缺省的话则直接采用当前时间戳</p>
+</li>
+<li><p>getdate() 返回数组形式的日期和时间信息，没有时间戳的话则以当前时间为准</p>
+</li>
+<li><p>本地化时间和日期</p>
+<ul>
+<li>setlocate(本地化选项(货币、时间等)，地域信息）</li>
+<li>strftiom(格式，时间戳) 用给定的字符串格式对时间戳进行格式化</li>
+</ul>
+</li>
+<li><p>生成时间戳 strtotime( ) 能够将人和英文文本的日期转换成时间戳形式，否则久参考now()产生的时间</p>
+</li>
+<li><p>微秒级时间戳 </p>
+<p>microtiome( )返回当前UNIX的时间戳和微秒数，格式为“msec sec”</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  <span class="comment">//计算程序的运行时间</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run_time</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">list</span>($msec,$sec) = explode(<span class="string">" "</span>,microtime());</span><br><span class="line">    <span class="keyword">return</span> ((float)$msec + (float)$sec);</span><br><span class="line">&#125;</span><br><span class="line">$strat_time = run_time();</span><br><span class="line"><span class="comment">/*     运行程序代码    */</span></span><br><span class="line">$end_time = run_time();</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;!-- 输出差值--&gt;</span><br><span class="line">该代码的运行时间为&lt;front color=blue&gt;<span class="meta">&lt;?php</span> <span class="keyword">echo</span> ($end_time - $start_time);<span class="meta">?&gt;</span>&lt;front&gt;秒</span><br></pre></td></tr></table></figure>
+<p>####Cooike</p>
+<ul>
+<li><p>cooike是一种在浏览器端存储数据并一次来跟踪和识别用户的机制，是web服务器暂存用户端的一个文本文件</p>
+</li>
+<li><p>cookie可以记录访客的信息（例如登陆名和密码）</p>
+<p>在页面之间传递变量</p>
+<p>临时存储internet页面，提高浏览的速度</p>
+</li>
+<li><p>创建cookie :  setcookie(变量名、变量值、失效时间、有效路径 )</p>
+<p>cookie是HTTP的头部组成部分，必须在其他内容之前最先输出</p>
+</li>
+<li><p>读取cookie  超级全局数组$_COOKIE[ ]</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">if</span>(!<span class="keyword">isset</span>($_COOKIE[<span class="string">"visittime]))&#123;</span></span><br><span class="line"><span class="string">        setcookie("</span>visittime<span class="string">",date("</span>y-m-d H:i:s<span class="string">"));</span></span><br><span class="line"><span class="string">        echo "</span>欢迎您第一次访问本网站！<span class="string">"；</span></span><br><span class="line"><span class="string">	&#125;else&#123;</span></span><br><span class="line"><span class="string">        setcookie("</span>visittime<span class="string">",data("</span>y-m-d H:i:s<span class="string">"),time()+60);</span></span><br><span class="line"><span class="string">        echo "</span>您上次访问本网站的时间为：<span class="string">".$_COOKIE["</span>visittime<span class="string">"];</span></span><br><span class="line"><span class="string">        echo "</span>&lt;br&gt;<span class="string">"</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">		echo "</span>您本次访问网站的时间为：<span class="string">".date("</span>y-m-d H:i:s<span class="string">");</span></span><br><span class="line"><span class="string">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>删除cookie</p>
+<p>如果没有设置cookie的失效时间，它会在关闭浏览器的时候被自动删除。</p>
+<p>如果在关闭浏览器之前删除Cookie文件，还是需要使用setcookie()函数</p>
+<ul>
+<li>setcookie(“name”, “”, time() - 1 );  第二个参数空值，第三个参数过期时间小于当前时间，过期时间设置为0也可以直接删除cookie</li>
+<li>手动删除</li>
+</ul>
+</li>
+<li><p>cookie的生命周期</p>
+<ul>
+<li><p>会话cookie：不设置过期时间的cookie的生命周期就在浏览器会话周期之内，一般不保存在硬盘上，而是保存在内存当中</p>
+</li>
+<li><p>设置了过期时间的cookie则长期保存在客户端应p将a三，再次打开还能看到</p>
+</li>
+<li>每个cookie的最大容量是4KB，每个域名最多支持20个cookie</li>
+</ul>
+</li>
+</ul>
+<p>#####session</p>
+<p>会话，是指终端用户和交互系统进行通信的时间间隔，通常是注册进入到注销退出的时间</p>
+<ul>
+<li><p>流程</p>
+<p>启动session会话并随机生成一个唯一的session_id，也就是session的文件名并存储与服务器内存当中，当关闭页面的时候id自动注销。</p>
+</li>
+<li><p>作用</p>
+<p>Http是无状态记录的，通过sesson可以记录用户的有关信息，当以同一身份进入相关页面的时候可以传递用户的相关信息。（淘宝购物或者各种登陆界面的二级界面）</p>
+</li>
+<li><p>启动会话 session_start( ) 使用前浏览器不能有任何输出</p>
+<p>采用session_register( )函数则登陆一个变量并隐含调用session_start( )</p>
+</li>
+<li><p>会话变量启动之后全部保存在数组 $_SESSION 当中</p>
+</li>
+<li><p>使用会话前需要判断是否有会话_id存储在$_SESSION当中，有则可以载入调用</p>
+</li>
+<li><p>删除会话</p>
+<ul>
+<li>删除单个会话：直接unset( ) 相关的$_SESSION的元素即可</li>
+<li>删除多个会话：<ul>
+<li>注销所有会话，赋值空数组 ：$_SESSION = array( );</li>
+<li>结束当前会话，清空所有变量，采用session_destroy( )清空资源，销毁session</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设置失效时间</p>
+<ul>
+<li>session_set_cookie_params( ) 结合cookie设置失效时间，必须在启动session前调用</li>
+<li>使用setcookie( )手动设置session失效时间</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	session_start();</span><br><span class="line">	$time = <span class="number">1</span>*<span class="number">60</span>;</span><br><span class="line">	setcookie(session_name(),session_id(),time()+$time()）)</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>session和cooike</p>
+<p>session必须搭配cookie使用，在页面之间传递用户参数，不然就相当于每个页面都产生新的session_id, session传递失效</p>
+<p>如果客户端禁用cookie，可以——</p>
+<ul>
+<li>登陆前提前提醒打开cookie</li>
+<li>使用GET方法，隐藏表单传递session_id</li>
+<li>使用文件或数据库存储session_id,在页面传递间手动调用</li>
+</ul>
+</li>
+<li><p>session的临时文件</p>
+<p>如果将所有用户的session都保存在目录当中会降低服务器的安全性和效率</p>
+<p>故使用session_save_path( ) 存储session的临时文件</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	$path_save = <span class="string">'./tmp/'</span>,</span><br><span class="line">	session_save_path($path);  <span class="comment">//应该放在启动session之前</span></span><br><span class="line">	session_start();</span><br><span class="line">	$_SESSION[<span class="string">'username'</span>] = <span class="keyword">true</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>session缓存</p>
+<p>将网页页面临时存储在浏览器客户端，并且设置缓存时间，第二次浏览网页就可以直接读取缓存的内容</p>
+<p>调用函数session_create_limiter(public/private) 完成缓存</p>
+<p>调用函数session_cache_expire(minute ) 设置缓存时间（均必须在启动之前调用）</p>
+</li>
+<li><p>session和cookie的区别</p>
+<p>session 把信息保存在服务器上，并通过一个SesssionID来传递客户端的信息，</p>
+<p>cookie把所有的信息以文本文件的形式存储在客户端，并由浏览器进行管理和维护</p>
+</li>
+</ul>
+<p>#####PHP x 文件管理</p>
+<ul>
+<li>fopen( )打开文件，fclose( ) 关闭文件</li>
+<li>读取文件<ul>
+<li>readfile( ) 读取文件并写入到缓冲，不需要打开关闭，只需要一个路径</li>
+<li>xsfile( ) 读取文件按行存储到数组</li>
+<li>file_get_contents( )  把文件内容从offset开始读区maxlen长度的字符串</li>
+<li>fgets( )  从已经打开的文件当中读取一行数据为（length - 1）长度的字符串</li>
+<li>fgetss(  ) 读取一行数据的同时过滤掉PHP和HTML标记</li>
+<li>fgetc( ) 按字符读取，对某一个字符进行查找和替换</li>
+<li>fread( ) 读取指定长度的数据</li>
+</ul>
+</li>
+<li>写入文件<ul>
+<li>fwrite( ) ／fputs( )  写入指针指定位置，可以设置长度限制</li>
+<li>file_put_contents( ) = fopen( ) + fwrite( ) + fclose( )</li>
+</ul>
+</li>
+<li>除了file( )、readfile( )等少数几个函数之外，一般情况下操作文件必须要fopen( )打开，再fclose( )关闭，文件的信息函数则一般不用。</li>
+</ul>
+<p>#####目录处理</p>
+<ul>
+<li><p>目录是一种特殊的文件</p>
+</li>
+<li><p>opendir( ) 打开文件不存在则创建，打开目录不存在则报错，可以在函数前加@抑制错误信息</p>
+</li>
+<li><p>closedir( )关闭目录</p>
+<p>scandir( ) 浏览目录文件</p>
+<p>mkdir( ) 新建目录  </p>
+<p>rmdir( ) 删除目录</p>
+</li>
+</ul>
+<p>#####文件指针</p>
+<ul>
+<li><p>rewind(  )  可以将指定指针设置为文件流的开头</p>
+</li>
+<li><p>fseek(  )      whence的值包括——</p>
+<p>SEEK_SET (offset) 、SEEK_CUR (当前位置+offset)、SEEK_END(文件末尾+offset)</p>
+</li>
+<li><p>ftell( )  返回当前返回指针的位置</p>
+</li>
+</ul>
+<p>####面向对象</p>
+<ul>
+<li><p>类的定义</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	class SportObject()&#123;</span><br><span class="line">       ……</span><br><span class="line">	&#125; </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>成员方法：用于实现类的一个行为，是类的一个部分、 </p>
+</li>
+<li><p>实例化：类是具体功能的抽象描述和集合，使用类的方法必须将它实例为对象</p>
+</li>
+<li><p>类的常量不需要实例化，直接可以采用类名-&gt;访问</p>
+</li>
+<li><p>构造方法：生成对象的时候自动执行的成员方法（初始化对象）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    claa SportObject&#123;</span><br><span class="line">    <span class="keyword">public</span> $name;</span><br><span class="line">    <span class="keyword">public</span> $height;</span><br><span class="line">    <span class="keyword">public</span> $age;</span><br><span class="line">    <span class="keyword">public</span> function__construct($name,$height,$age)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;height = $height;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  $sport = <span class="keyword">new</span> SportObject(<span class="string">"姚曳"</span>,<span class="string">"165"</span>,<span class="string">"20"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>void__construct(      )  构造函数，“__”是两个下划线   //魔术方法</p>
+<p>如果没有构造函数，PHP会自动生成一个，没有任何参数，没有任何操作</p>
+</li>
+<li><p>析构函数   释放内存</p>
+<p>void__destruct( void )    //魔术方法</p>
+<p>一般不需要手动创建析构函数，自动调用并回收垃圾</p>
+</li>
+<li><p>继承：子类继承父类所有的成员变量和方法（包括构造函数），通过extends声明</p>
+</li>
+<li><p>多态：同一种方法的不同形态</p>
+<ul>
+<li>覆盖：子类当中重写父类方法</li>
+<li>重载：一个函数标识符被用作多个函数名，可实现代码重用</li>
+</ul>
+</li>
+<li><p>子类不仅可以调用自己的变量和方法也可以调用父类的变量和方法</p>
+<ul>
+<li><p>$this-&gt;  伪变量 只可以在类的内部使用，用于调用类中的方法</p>
+<p>当类被实例化之后，$this同时被实例化为本类的对象</p>
+</li>
+<li><p>::   操作符::可以在没有声明任何实例的情况下访问类中的成员方法或成员变量</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//依次是用了类名、parent、self关键字来调用变量和方法</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Book</span></span>&#123;</span><br><span class="line">    	<span class="keyword">const</span> NAME = <span class="string">"cpmputer"</span>;</span><br><span class="line">    	function__construct()&#123;</span><br><span class="line">        	<span class="keyword">echo</span><span class="string">'本月图书类冠军为：'</span>.Book::NAME.<span class="string">''</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	clsss I_book extends Book&#123;</span><br><span class="line">        </span><br><span class="line">    	<span class="keyword">const</span> NAME = <span class="string">'foreign language'</span>;</span><br><span class="line">        function__construct()&#123;</span><br><span class="line">            <span class="keyword">parent</span>::__construct();</span><br><span class="line">            <span class="keyword">echo</span><span class="string">'本月图书类冠军为：'</span>.<span class="keyword">self</span>::NAME.<span class="string">''</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$obj = <span class="keyword">new</span> I_book();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>限定关键字</p>
+<ul>
+<li>public 公开可以在程序的任何位置被其他类和对象调用（没写即默认public）</li>
+<li>private  智能在所属类的内部被调用和修改，子类当中不可见</li>
+<li>protected 除了在本类和子类外，其他地方不可调用</li>
+<li>final  不可以被继承，也不能再有子类，方法不可以被重写和覆盖</li>
+</ul>
+</li>
+<li><p>静态变量和方法</p>
+<p>不需要实例化即可调用，在对象销毁之后仍可以保存，类第一次被加载就已经分配了存储空间</p>
+</li>
+<li><p>抽象类  不能被实例化的类，只能用作其他类的父类来使用，使用abstrct关键字声明</p>
+<p>抽象类至少包含一个抽象方法且没有方法体，只能被继承在子类中完成</p>
+</li>
+<li><p>接口类：PHP只支持单继承，采用接口的方式来实现多重继承</p>
+<p>采用interface的关键字声明，只能包含未实现的方法和一些成员变量（只能public）</p>
+<p>所有未实现的方法必须在子类中全部实现，否则PHP将会出现错误</p>
+</li>
+<li><p>克隆对象</p>
+<p>在php4当中，默认采取值传递的方式，引用需要使用$</p>
+<p>但是在php5当中，使用 = 默认为引用的方式，生成备份必须采用clone关键字</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$object1 = <span class="keyword">new</span> ClassName();</span><br><span class="line">$object2 = <span class="keyword">clone</span> $object1;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>__clone方法，可以是克隆出来的对象保留一些自己的行为和属性  //魔术方法</p>
+<p>在类中引用__clone可以定义属于clone对象的属性和方法，其余直接复制</p>
+<p>当对象被复制后，PHP 5 会对对象的所有属性执行一个浅复制（shallow copy）。所有的引用属性 仍然会是一个指向原来的变量的引用。</p>
+<p>当复制完成时，如果定义了 <strong>clone() 方法，则新创建的对象（复制生成的对象）中的 </strong>clone() 方法会被调用，可用于修改属性的值（如果有必要的话）。</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> $sex;</span><br><span class="line">  <span class="keyword">public</span> $name;</span><br><span class="line">  <span class="keyword">public</span> $age;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name=<span class="string">""</span>, $age=<span class="number">25</span>, $sex=<span class="string">'男'</span>)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;sex = $sex;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__clone</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="keyword">__METHOD__</span>.<span class="string">"你正在克隆对象&lt;br&gt;"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">$person = <span class="keyword">new</span> Person(<span class="string">'小明'</span>); <span class="comment">// 初始赋值</span></span><br><span class="line">$person2 = <span class="keyword">clone</span> $person;</span><br><span class="line"> </span><br><span class="line">var_dump(<span class="string">'persion1:'</span>);</span><br><span class="line">var_dump($person);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;br&gt;'</span>;</span><br><span class="line">var_dump(<span class="string">'persion2:'</span>);</span><br><span class="line">var_dump($person2);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Person::__clone你正在克隆对象</span><br><span class="line">string(9) &quot;persion1:&quot; object(Person)#1 (3) &#123; [&quot;sex&quot;]=&gt; string(3) &quot;男&quot; [&quot;name&quot;]=&gt; string(6) &quot;小明&quot; [&quot;age&quot;]=&gt; int(25) &#125; </span><br><span class="line">string(9) &quot;persion2:&quot; object(Person)#2 (3) &#123; [&quot;sex&quot;]=&gt; string(3) &quot;男&quot; [&quot;name&quot;]=&gt; string(6) &quot;小明&quot; [&quot;age&quot;]=&gt; int(25) &#125;</span><br><span class="line">克隆成功。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对象比较</p>
+<p>== 比较对象的内容； === 比较对象的引用地址</p>
+</li>
+<li><p>类型检测  instacnceof 可以判断对象属于哪个类（object instanceof class）</p>
+</li>
+<li><p>魔术方法   必须先在类中定义才可以（默认）使用</p>
+<ul>
+<li><p>__set  写入不可见或者不存在的变量</p>
+<p>__set( $property, $value )` 方法用来设置私有属性， 给一个未定义的属性赋值时，此方法会被触发，传递的参数是被设置的属性名和值。</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> $name;</span><br><span class="line">  <span class="keyword">private</span> $age;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name=<span class="string">""</span>, $age=<span class="number">25</span>)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 声明魔术方法需要两个参数，真接为私有属性赋值时自动调用，并可以屏蔽一些非法赋值</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> $property</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> $value</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__set</span><span class="params">($property, $value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ($property==<span class="string">"age"</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ($value &gt; <span class="number">150</span> || $value &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;$property = $value;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 在类中声明说话的方法，将所有的私有属性说出</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">say</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"我叫"</span>.<span class="keyword">$this</span>-&gt;name.<span class="string">"，今年"</span>.<span class="keyword">$this</span>-&gt;age.<span class="string">"岁了"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">$Person=<span class="keyword">new</span> Person(<span class="string">"小明"</span>, <span class="number">25</span>); <span class="comment">//注意，初始值将被下面所改变</span></span><br><span class="line"><span class="comment">//自动调用了__set()函数，将属性名name传给第一个参数，将属性值””传给第二个参数</span></span><br><span class="line">$Person-&gt;name = <span class="string">"小红"</span>;   </span><br><span class="line"><span class="comment">//赋值成功。如果没有__set()，则出错。</span></span><br><span class="line">$Person-&gt;age = <span class="number">16</span>; <span class="comment">//赋值成功</span></span><br><span class="line">$Person-&gt;age = <span class="number">160</span>; <span class="comment">//160是一个非法值，赋值失效</span></span><br><span class="line">$Person-&gt;say(); <span class="comment">//输出：我叫小红，今年16岁了</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>__get  调用不可见或者未定义的成员变量</p>
+<p>当类的成员属性被设定为 private 后，如果我们试图在外面调用它则会出现“不能访问某个私有属性”的错误，魔术方法 __get()可以解决这个问题。</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> $name;</span><br><span class="line">  <span class="keyword">private</span> $age;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name=<span class="string">""</span>, $age=<span class="number">1</span>)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 在类中添加__get()方法，在直接获取属性值时自动调用一次，以属性名作为参数传入并处理</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> $propertyName</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> int</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span><span class="params">($propertyName)</span></span></span><br><span class="line"><span class="function">  </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> ($propertyName == <span class="string">"age"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;age &gt; <span class="number">30</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;age - <span class="number">10</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;$propertyName;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;$propertyName;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">$Person = <span class="keyword">new</span> Person(<span class="string">"小明"</span>, <span class="number">60</span>); </span><br><span class="line"><span class="comment">// 通过Person类实例化的对象，并通过构造方法为属性赋初值</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"姓名："</span> . $Person-&gt;name . <span class="string">"&lt;br&gt;"</span>; </span><br><span class="line"><span class="comment">// 直接访问私有属性name，自动调用了__get()方法可以间接获取</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"年龄："</span> . $Person-&gt;age . <span class="string">"&lt;br&gt;"</span>;  </span><br><span class="line"><span class="comment">// 自动调用了__get()方法，根据对象本身的情况会返回不同的值</span></span><br><span class="line">？&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>__call ( ) 在对象中调用一个不可访问的方法时调用</p>
+<p>为了避免当调用的方法不存在时产生错误，而意外的导致程序中止，可以使用 __call() 方法来避免。该方法在调用的方法不存在时会自动调用，程序仍会继续执行下去。</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;               </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">say</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123; </span><br><span class="line">                </span><br><span class="line">      <span class="keyword">echo</span> <span class="string">"Hello, world!&lt;br&gt;"</span>; </span><br><span class="line">  &#125;   </span><br><span class="line">     </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 声明此方法用来处理调用对象中不存在的方法</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($funName, $arguments)</span></span></span><br><span class="line"><span class="function">  </span>&#123; </span><br><span class="line">     <span class="keyword">echo</span> <span class="string">"你所调用的函数："</span> . $funName . <span class="string">"(参数："</span> ; <span class="comment">// 输出调用不存在的方法名</span></span><br><span class="line">     print_r($arguments); <span class="comment">// 输出调用不存在的方法时的参数列表</span></span><br><span class="line">     <span class="keyword">echo</span> <span class="string">")不存在！&lt;br&gt;\n"</span>; <span class="comment">// 结束换行           </span></span><br><span class="line">  &#125;                     </span><br><span class="line">&#125;</span><br><span class="line">$Person = <span class="keyword">new</span> Person();      </span><br><span class="line">$Person-&gt;run(<span class="string">"teacher"</span>); <span class="comment">// 调用对象中不存在的方法，则自动调用了对象中的__call()方法</span></span><br><span class="line">$Person-&gt;eat(<span class="string">"小明"</span>, <span class="string">"苹果"</span>);       </span><br><span class="line">$Person-&gt;say();</span><br><span class="line">？&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">结果：</span><br><span class="line">你所调用的函数：run(参数：Array ( [0] =&gt; teacher ) )不存在！</span><br><span class="line">你所调用的函数：eat(参数：Array ( [0] =&gt; 小明 [1] =&gt; 苹果 ) )不存在！</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>__sleep（）和 __wakeup（）方法</p>
+<p>使用serialize（）函数可以实现序列化对象，将对象中的变量全部保存下来，对象中的类只保存类名，在使用serialize（）函数的时候，如果实例化对象包含__sleep方法则会先执行改方法以清楚对象并返回一个该对象中所有变量的数组，可以关闭对象所有可能具有的数据库连接等善后工作。</p>
+<p>如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误。</p>
+<p>同样的，unserialize( ) 函数可以重新还原一个被serialize( )序列化的对象，采用__wakeup( )方法可以恢复在序列化中可能丢失的数据库连接即相关操作</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> $sex;</span><br><span class="line">  <span class="keyword">public</span> $name;</span><br><span class="line">  <span class="keyword">public</span> $age;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($name=<span class="string">""</span>, $age=<span class="number">25</span>, $sex=<span class="string">'男'</span>)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = $name;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;age = $age;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;sex = $sex;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__sleep</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"当在类外部使用serialize()时会调用这里的__sleep()方法&lt;br&gt;"</span>;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = base64_encode(<span class="keyword">$this</span>-&gt;name);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">array</span>(<span class="string">'name'</span>, <span class="string">'age'</span>); </span><br><span class="line">      <span class="comment">// 这里必须返回一个数值，里边的元素表示返回的属性名称</span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * __wakeup</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"当在类外部使用unserialize()时会调用这里的__wakeup()方法&lt;br&gt;"</span>;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;sex = <span class="string">'男'</span>;</span><br><span class="line">    <span class="comment">// 这里不需要返回数组</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">$person = <span class="keyword">new</span> Person(<span class="string">'小明'</span>); <span class="comment">// 初始赋值</span></span><br><span class="line">var_dump(serialize($person));</span><br><span class="line">var_dump(unserialize(serialize($person)));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">运行结果：</span><br><span class="line">当在类外部使用serialize()时会调用这里的__sleep()方法</span><br><span class="line">string(58) &quot;O:6:&quot;Person&quot;:2:&#123;s:4:&quot;name&quot;;s:8:&quot;5bCP5piO&quot;;s:3:&quot;age&quot;;i:25;&#125;&quot; </span><br><span class="line">当在类外部使用serialize()时会调用这里的__sleep()方法</span><br><span class="line">当在类外部使用unserialize()时会调用这里的__wakeup()方法</span><br><span class="line">object(Person)#2 (3) &#123; [&quot;sex&quot;]=&gt; string(3) &quot;男&quot; [&quot;name&quot;]=&gt; int(2) [&quot;age&quot;]=&gt; int(25) &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>__autoload（）方法</p>
+<p>如果要在一个页面中引入很多的类，需要使用include_once( )或者require_once()一个一个地引入，__autoload（）可以自动实例化需要使用的类</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 文件autoload_demo.php </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__autoload</span><span class="params">($className)</span> </span>&#123; </span><br><span class="line">  $filePath = “project/<span class="class"><span class="keyword">class</span>/</span>&#123;$className&#125;.php”; </span><br><span class="line">  <span class="keyword">if</span> (is_readable($filePath)) &#123; </span><br><span class="line">    <span class="keyword">require</span>($filePath); </span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br><span class="line">   </span><br><span class="line"><span class="keyword">if</span> (条件A) &#123; </span><br><span class="line">  $a = <span class="keyword">new</span> A(); </span><br><span class="line">  $b = <span class="keyword">new</span> B(); </span><br><span class="line">  $c = <span class="keyword">new</span> C(); </span><br><span class="line">  <span class="comment">// … 业务逻辑 </span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (条件B) &#123; </span><br><span class="line">  $a = newA(); </span><br><span class="line">  $b = <span class="keyword">new</span> B(); </span><br><span class="line">  <span class="comment">// … 业务逻辑 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当php引擎第一次使用类A，但是找不到时，会自动调用 <strong>autoload 方法，并将类名“A”作为参数传入。所以，我们在 </strong>autoload() 中需要的做的就是根据类名，找到相应的文件，并包含进来，如果我们的方法也找不到，那么php引擎就会报错了。</p>
+<p>注意：这里可以只用require，因为一旦包含进来后，php引擎再遇到类A时，将不会调用__autoload，而是直接使用内存中的类A，不会导致多次包含。</p>
+</li>
+</ul>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 Yaoyee</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
