@@ -18,15 +18,14 @@
 <p>(2)输入命令：sudo php -v<br><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzfiepoie9j30pk0bamzu.jpg" alt="image-20190122175235420"></p>
 <p>第二步：修改Apache配置文件</p>
 <p>（1）前往Finder,输入地址：/private/etc/apache2</p>
-<p>（2）找到名为 httpd.conf 的文件，选择Subline打开.<br>    (因为此文件为locked不允许被修改.所以,我们可以将其复制到桌面上,修改后将原文件删掉,再将修改后的文件移到原文件的位置)<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzfihf6ivnj30zk0rwgwj.jpg" alt="image-20190122175510479"></p>
+<p>（2）找到名为 httpd.conf 的文件，选择Subline打开.<br>​    (因为此文件为locked不允许被修改.所以,我们可以将其复制到桌面上,修改后将原文件删掉,再将修改后的文件移到原文件的位置)<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzfihf6ivnj30zk0rwgwj.jpg" alt="image-20190122175510479"></p>
 <p>（3）打开后使用搜索关键字“php” ，搜索结果如图所示:<br>（4）删除这行文本最前面的那个“#”号，删除后保存一下，关闭文档</p>
 <p>第三步：生成PHP配置文件<br>（1）前往Finder,输入地址：/private/etc  ，在这个目录下找到一个名为 php.ini.default 的文件. 将这个文件复制一下，仍然拷贝到当前目录下，然后将新拷贝的文件重命名为 php.ini,</p>
 <p>第四步：重启Apache服务<br>(1)打开终端,输入命令: sudo apachectl restart<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzfijacf4wj319y0u0dkk.jpg" alt="image-20190122175650389"><br>( 此时打开 <a href="http://localhost" target="_blank" rel="noopener">http://localhost</a>: 网页会显示it works!)</p>
 <p>第五步: 测试运行PHP文件<br>（1）前往Finder,输入地址：/Library/WebServer(手动开启读写权限）</p>
 <p>（2） 在 Documents 文件夹下（这就是服务器的根路径）创建一个名为 index.php 的文件(名字随便起，为了测试)，在里面写如下php的代码，保存一下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">  phpinfo();</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>（3）打开浏览器访问我们刚才创建的文件，在地址栏输入：<a href="http://localhost/index.php" target="_blank" rel="noopener">http://localhost/index.php</a>, 如图所示,则成功:</p>
-<p><img src="../Library/Application Support/typora-user-images/image-20190122175820227.png" alt="image-20190122175820227"></p>
+<p>（3）打开浏览器访问我们刚才创建的文件，在地址栏输入：<a href="http://localhost/index.php" target="_blank" rel="noopener">http://localhost/index.php</a>,</p>
 <p>####PHP标记风格</p>
 <ul>
 <li>XML风格，该风格在XML HTML中都可以使用，服务器不能禁用</li>
