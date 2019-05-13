@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Yaoyee"><link rel="alternative" href="/atom.xml" title="I'm Yaoyee" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>charles原理 - I'm Yaoyee</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">I'm Yaoyee</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">カタログ/（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2019-05-13T14:51:49.097Z">May 13, 2019</time><h1 class="post__title"><a href="/2019/05/13/charles原理/">charles原理</a></h1><div class="post__main echo"><p>#####HTTPS加密流程：<strong>用非对称算法随机加密出一个对称密钥，然后双方用对称密钥进行通信。</strong></p>
+<p>具体来说，就是客户端生成一个随机密钥，用服务器的公钥对这个密钥进行非对称加密，服务器用私钥进行解密，然后双方就用这个对称密钥来进行数据加密了。（<strong>非对称加密算法</strong>，又叫公开密钥加密。需要有2个密钥，公钥和私钥，公钥向所有人公开，私钥不公开。用公钥加密的数据只有私钥才能解密；反之，用私钥加密的数据只有公钥才能解密。)</p>
+<p>####数字证书</p>
+<p>数字证书就是身份认证机构（Certificate Authority）盖在数字身份证上的一个章或印（或者说加在数字身份证上的一个签名），这一行为表示身份认证机构已认定这个人。证书的合法性可以向CA验证。</p>
+<p>数字证书主要包含以下信息：</p>
+<ul>
+<li>证书颁发机构</li>
+<li>证书颁发机构签名</li>
+<li>证书绑定的服务器域名</li>
+<li>证书版本、有效期</li>
+<li>签名使用的加密算法（非对称算法，如RSA）</li>
+<li>公钥</li>
+</ul>
+<p>客户端收到服务器的响应后，先向CA验证证书的合法性（根据证书的签名、绑定的域名等信息），如果校验不通过，浏览器会中止连接，向用户提示证书不安全。</p>
+<p>需要提一点的是，证书的制作方法是公开的，任何人都可以自己制作证书，所以有些公司不向CA申请，比如12306。但自己制作的证书是得不到CA认证的，所以访问12306网站时，浏览器会有证书不合法的提示。</p>
+<p> ####数据完整性校验</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2438937-bd85d0ac6a75e5c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>哈希算法能够将任意长度的字符串转化为固定长度的字符串，该过程不可逆，可用来作数据完整性校验。</p>
+<p><strong>服务器在发送报文之前做了3件的事：</strong></p>
+<ul>
+<li>用哈希算法对报文提取定长摘要</li>
+<li>用私钥对摘要进行加密，作为数字签名</li>
+<li>将数字签名附加到报文末尾发送给客户端</li>
+</ul>
+<p><strong>客户端接收到报文后：</strong></p>
+<ul>
+<li>用公钥对服务器的数字签名进行解密</li>
+<li>用同样的算法重新计算出报文的数字签名</li>
+<li>比较解密后的签名与自己计算的签名是否一致，如果不一致，说明数据被篡改过。</li>
+</ul>
+<p>同样，客户端发送数据时，通过公钥加密报文摘要，服务器用私钥解密，用同样的方法校验数据的完整性。</p>
+<p>####HTTPS通信的大致过程</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2438937-1bed618480b4d12b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>HTTPS通信过程</p>
+<ol>
+<li>客户端将自己支持的加密算法发送给服务器，请求服务器证书；</li>
+<li>服务器选取一组加密算法，并将证书返回给客户端；</li>
+<li>客户端校验证书合法性，生成随机对称密钥，用公钥加密后发送给服务器；</li>
+<li>服务器用私钥解密出对称密钥，返回一个响应，HTTPS连接建立完成；</li>
+<li>随后双方通过这个对称密钥进行安全的数据通信。</li>
+</ol>
+<p>####抓包原理概括</p>
+<p>Charles作为一个“中间人代理”，当浏览器和服务器通信时，Charles接收服务器的证书，但动态生成一张证书发送给浏览器，也就是说Charles作为中间代理在浏览器和服务器之间通信，所以通信的数据可以被Charles拦截并解密。由于Charles更改了证书，浏览器校验不通过会给出安全警告，必须安装Charles的证书后才能进行正常访问。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2438937-a453e3e411efcae5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt="img"></p>
+<p>####Charles抓取HTTPS流程</p>
+<ol>
+<li>客户端向服务器发起HTTPS请求</li>
+<li>Charles拦截客户端的请求，伪装成客户端向服务器进行请求</li>
+<li>服务器向“客户端”（实际上是Charles）返回服务器的CA证书</li>
+<li>Charles拦截服务器的响应，获取服务器证书公钥，然后自己制作一张证书，将服务器证书替换后发送给客户端。<strong>（这一步，Charles拿到了服务器证书的公钥）</strong></li>
+<li>客户端接收到“服务器”（实际上是Charles）的证书后，生成一个对称密钥，用Charles的公钥加密，发送给“服务器”（Charles）</li>
+<li>Charles拦截客户端的响应，用自己的私钥解密对称密钥，然后用服务器证书公钥加密，发送给服务器。<strong>（这一步，Charles拿到了对称密钥）</strong></li>
+<li>服务器用自己的私钥解密对称密钥，向“客户端”（Charles）发送响应</li>
+<li>Charles拦截服务器的响应，替换成自己的证书后发送给客户端</li>
+<li>至此，连接建立，Charles拿到了 服务器证书的公钥 和 客户端与服务器协商的对称密钥，之后就可以解密或者修改加密的报文了。</li>
+</ol>
+<p>####有关加密：</p>
+<p>对称加密主要用于报文的加密，Charles作为中间人在第一步替换服务器要给客户端证书的时候就已经把自己的证书给了客户端</p>
+<p>动态生成的子证书是Charles根证书签名的，而只要信任了根证书，这些子证书也就会被信任。而且子证书中还包含了请求的域名等信息，可以被客户端成功校验。</p>
+<p>客户端在校验这个证书的时候(你在电脑上已经下载并且相信了Charles的根证书了，客户端肯定会校验成功)相信了这个证书是真实有效的</p>
+<p>客户端把对称加密的私钥给了Charles，Charles再给服务器（用的是服务器的证书），所以用户端、charles、服务器的对称加密密钥都是一样的。</p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 Yaoyee</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
