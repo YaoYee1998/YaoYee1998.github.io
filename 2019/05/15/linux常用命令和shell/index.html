@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Yaoyee"><link rel="alternative" href="/atom.xml" title="I'm Yaoyee" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title> - I'm Yaoyee</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">I'm Yaoyee</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">カタログ/（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2019-05-15T14:37:03.286Z">May 15, 2019</time><h1 class="post__title"><a href="/2019/05/15/linux常用命令和shell/"></a></h1><div class="post__main echo"><hr>
+<h2 id="title：linux常用命令和shell"><a href="#title：linux常用命令和shell" class="headerlink" title="title：linux常用命令和shell"></a>title：linux常用命令和shell</h2><h5 id="基础linux命令"><a href="#基础linux命令" class="headerlink" title="基础linux命令"></a>基础linux命令</h5><ul>
+<li><p>相对路径特殊字符：</p>
+<p>单点 . 表示当前目录</p>
+<p>双点 ..  表示当前目录的父目录</p>
+</li>
+<li><p>查询文件列表</p>
+<p>ls 按字母排序文件目录</p>
+<p>ls -F 区分目录、单个文件、可执行文件</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g184r06gwjj30y604cdgl.jpg" alt="image-20190319152142106"></p>
+<p>ls -a 显示包括隐藏文件（以点号开头）在内的所有文件</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g184tcii85j30w007k406.jpg" alt="image-20190319152359328"></p>
+<p>ls -l 显示长目录，包含了权限、应链接、用户名、大小、修改时间等信息</p>
+<p>ls -i 查看文件的inode</p>
+</li>
+<li><p>创建文件</p>
+<p>touch + 文件名   没有文件创建空文件，已有文件，覆盖原有修改时间</p>
+</li>
+<li><p>复制文件</p>
+<p>cp source destination 如果目标文件已经存在，则直接覆盖，-i 强制shell询问</p>
+<p>单点操作符很适合用于cp命令，将别的文件复制到当前目录当中</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g185dkhgvzj30to06gt9j.jpg" alt="image-20190319154320333"></p>
+</li>
+<li><p>制表键自动补全</p>
+<p>如果提供内容不足以区分多个文件，就连续按两下，展示所有待选文件名</p>
+</li>
+<li><p>链接文件（虚拟副本）</p>
+<ul>
+<li>符号链接（一个独立文件指向原文件）ln -s 【原文件】【链接文件】</li>
+<li>硬链接（包含原文件所有信息的虚拟文件，本质是同一个文件，共享inode编号）ln 【原文件】【链接文件】</li>
+</ul>
+</li>
+<li><p>重命名文件</p>
+<p>mv 【原文件名】【现文件名】只影响文件名，inode和时间戳保持不变</p>
+</li>
+<li><p>删除文件</p>
+<p>rm -i  【文件名】 -i 提示用户再次确认   -f  强制删除</p>
+<p>-r 向下进入目录，删除其中的文件，并删除目录本身（rm -rf）</p>
+</li>
+<li><p>创建目录</p>
+<p>mkdir 【文件夹名】 -p 创建多个目录及子目录</p>
+</li>
+<li><p>删除目录</p>
+<p>rmdir命令只删除空目录，必须先把目录下的文件删掉</p>
+</li>
+<li><p>查看文件类型</p>
+<p>file【文件名】 可以用来展示链接文件的源文件，以及可执行文件所需的库</p>
+</li>
+<li><p>查看文件内容</p>
+<p>cat显示文件中的所有数据，-n 可以显示行号  -b 只给文本部分显示行号（空格没有）</p>
+<p>more命令—分页工具，显示一页数据之后停下来</p>
+<p>less（less is more）可以提供更多的展示方法，如上下键翻页</p>
+</li>
+<li><p>查看部分文件内容</p>
+<p>tail 显示文件尾部的内容，默认显示最后10行   -n【行数】显示需要的行数</p>
+<p>-f 允许在其他进程使用文件的时候查看文件的内容，tail保持活跃并不断显示</p>
+<p>head 展示文件前10行的内容，-n  显示需要行数的信息</p>
+</li>
+<li><p>查看进程</p>
+<p>ps 展示运行在当前控制台下的属于当前用户的进程</p>
+<p>top 实时展示进程的信息</p>
+</li>
+<li><p>杀死进程</p>
+<p>kill pid 给该进程发送一个TERM信号，必须是进城的属主或者root</p>
+</li>
+<li><p>挂载 - mount  卸载 - umount</p>
+</li>
+<li><p>查看磁盘的使用情况  df -h（使用M和k）</p>
+<p>du 查看特定目录下磁盘使用情况，-c 文件总大小  -h（显示KMG） </p>
+</li>
+<li><p>sort 排序（字符排序），-n （数字排序） -M（按月排序，三字符月份名）</p>
+</li>
+<li><p>搜索数据</p>
+<p>grep pattern 【file】-v 反向搜索  -n 显示行数 -c 匹配行个数 -e 指定多个模式匹配</p>
+<p>egrep 支持POSIX扩展正则表达式，</p>
+</li>
+</ul>
+<p>#####shell基础</p>
+<ul>
+<li><p>父子shell</p>
+<p>shell本身就是一个进程，对应有父子关系之分，可以通过查询进程ID好家卡</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g198yswx36j30rg098ta2.jpg" alt="image-20190320143310067"></p>
+</li>
+<li><p>命令列表：依次执行的一串命令，用分号隔开</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">pwd</span>; ls; <span class="built_in">cd</span> /etc; <span class="built_in">pwd</span>; <span class="built_in">cd</span> ; <span class="built_in">pwd</span> ; ls</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>进程列表，用括号包含命令列表，生成一个子进程来执行相关的命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ (pwd; ls; cd /etc; pwd; cd ; pwd ; ls)</span><br></pre></td></tr></table></figure>
+<p>​       采用echo $BASH_SUBSHELL,若返回值=0则说明没有子shell，否则则说明存在</p>
+<ul>
+<li><p>后台模式，后台处理命令的同时让出cli继续别的操作（命令行末尾加&amp;）</p>
+<p>一般会返回两个信息。一是显示在方括中的后台作业号(background job) ；二是后台作业的进程ID。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g199ohzu9gj30ro05q757.jpg" alt="image-20190320145755563"></p>
+</li>
+<li><p>jobs命令可以显示出当前运行在后台当中的所有用户的进程</p>
+</li>
+<li><p>协程coproc：创建子shell并在子shell当中执行命令</p>
+</li>
+<li><p>外部命令（文件系统命令），执行的时候会”衍生”一个子进程，ps就是外部命令</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g19a9i7pqjj30r603sq3d.jpg" alt="image-20190320151804815"></p>
+</li>
+<li><p>进程列表：用括号包含的一系列连续执行的命令（可嵌套）</p>
+<p>括号的加入使得命令列表变成了进程列表，生成了一个子shell来执行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">pwd</span> ; ls ; <span class="built_in">cd</span> /etc ; <span class="built_in">pwd</span> ; <span class="built_in">cd</span> ; <span class="built_in">pwd</span> ; ls /home/Christine</span></span><br><span class="line">Desktop Downloads Music Public Videos </span><br><span class="line">Documents junk.dat Pictures Templates</span><br><span class="line">/etc</span><br><span class="line">/home/Christine</span><br><span class="line">Desktop    Downloads  Music     Public     Videos</span><br><span class="line">Documents  junk.dat   Pictures  Templates</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子shell的运用模式</p>
+<ul>
+<li><p>后台模式</p>
+<p>将命令进入后台模式，可以在命令末尾加上&amp;，当它置入后台之后，在shell CLI提示符返回之前，会出现两条信息。第一条信息是显示在方括号中的后台作业 (background job) (1)，第二条是后台作业的进程ID(2396）。类似的，jobs命令可以显示出目前所有运行在后台模式中的用户的进程和进程的当前状态</p>
+</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g1zv5ul6w3j318u08eq45.jpg" alt="image-20190412150538285"></p>
+<ul>
+<li>协程 coproc 创建子shell并在后台运行</li>
+</ul>
+</li>
+<li><p>外部命令</p>
+<p>也称文件系统命令，是存在于bash shell之外的程序。它们并不是shell程序的一部分。 外部命令程序通常 于/bin、/usr/bin、/sbin或/usr/sbin中，在执行外部命令的过程中会创建出一个子进程</p>
+</li>
+<li><p>内建命令</p>
+<p>不需要用子进程来执行，已经和shell编译成了一体，作为shell的组成部分存在</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g1zvgyz71kj30xg05gt8u.jpg" alt="image-20190412151632310"></p>
+</li>
+<li><p>常见命令</p>
+<ul>
+<li>history，查看并跟踪使用过的命令，存在内存，shell退出后写入.bash_history</li>
+<li>!!，重用上一条命令，!! +编号，重用history的某一条命令</li>
+<li>alias，定义命令的别名，只能在被定义的shell命令中使用它</li>
+</ul>
+</li>
+</ul>
+<p>#####环境变量</p>
+<p>在内存中存储数据一遍脚本能够轻松访问到，全局变量可以用于所有子shell均可见，但是局部变量之对于创建他们的shell可见，所有环境变量名均使用大写。</p>
+<p>可以通过echo $变量名 设置局部变量，然后为局部变量赋数值(不允许存在空格)</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1zw1r6ybfj30to04i3yi.jpg" alt="image-20190412153629793"></p>
+<ul>
+<li><p>设置与删除全局环境变量</p>
+<p>先创建一个局部环境变量，然后通过export语句将其导出到全局环境当中，不需要$</p>
+<p>在子shell中修改变量不会反映到父shell，子shell无法使用export修改原有命令</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g1zw5qiczaj30xo0603ys.jpg" alt="image-20190412154019180"></p>
+<p>可以使用unset命令删除现有的环境变量，操作环境变量的时候不要使用$</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g23bua6grcj30xq05qabg.jpg" alt="image-20190415145933100"></p>
+</li>
+<li><p>设置PATH环境变量</p>
+<p>PATH环境定义了用于进行命令和程序查找的目录，其间使用冒号分隔</p>
+<p>可以采用PATH=$PATH:/…./….  的方式直接添加路径，但是退出shell或重启系统即失效</p>
+</li>
+<li><p>shell中的数组变量</p>
+<p>要给某个环境变量设置多个数值，可以把数值放在括号里，数值之间用空格分隔</p>
+<p>$ mytest=(one two three four five    但是echo的时候只会展示第一个</p>
+<p>展示其他索引的方式为：echo ${mytest [2] }  unset可以删除数值，但是索引依然占位 </p>
+</li>
+</ul>
+<p>#####构建基本shell脚本</p>
+<ul>
+<li><p>创建shell脚本</p>
+<p>文件第一行指定使用的shell，  #!/bin/bash（#为注释行）</p>
+<p>由于PATH路径下默认加有当前文件夹，可以直接用  ./[文件] 启动bash脚本</p>
+<p>但当前没有执行文件的权限，chmod u+x [文件名] </p>
+</li>
+<li><p>echo: 可以将语句添加到shell脚本中任何需要显示额外信息的地方</p>
+<p>-n 在字符串的两侧使用引号，保证要显示的字符串尾部部有一个空格。命令输出将会在紧接着字符串结束的地方出现。</p>
+<p>例： echo -n “djvbqwejve: “</p>
+</li>
+<li><p>用户变量：在脚本结束前维持生命周期，$来引用变量值，引用变量来赋值则不使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test4</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> assigning a variable value to another variable</span></span><br><span class="line">value1=10</span><br><span class="line">value2=$value1</span><br><span class="line">echo The resulting value is $value2</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod u+x test4</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test4</span></span><br><span class="line">The resulting value is 10</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提取命令</p>
+<p>使用反引号 或者 $( )格式 提取命令信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test5</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">testing=$(date)</span><br><span class="line">echo "The date and time are: " $testing</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">变量testing获得了date命令的输出,然后使用<span class="built_in">echo</span>显示出它的值</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> chmod u+x test5</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test5</span></span><br><span class="line">The date and time are:  Mon Jan 31 20:23:25 EDT 2014</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>管道   command1 | command2</p>
+<p>管道符号在shell编程之外也很少用到，该符号由两个竖线构成，一个在另一个上面，然而管道符号的印刷体通常看起来更 是单个 (|)，通常与反斜线处于同一个键上。</p>
+<p>Linux系统实际上会同时运行这两个命令，在系统内部将它们连接起来。在第一个命令产生输出的同时，输出会被立即送给第二个命令。数据传输不会用到任何中间文件或缓冲区。</p>
+<p>管道最流行的用法之一是将命令产生的大量输出通过管道传送给more命令，可以强制在输出一屏数据显示之后停下来。 </p>
+</li>
+<li><p>数学计算</p>
+<p>bash shell为了保 跟Bourne shell的兼容而包含了expr命令，但它同样也提供了一种更简单的方法来执行数学表达式。美元符号+方括号    $[ operation ] （只支持整数运算）</p>
+</li>
+<li><p>退出状态码</p>
+<p>linux提供了一个专门的变量$来保存上个已执行命令的退出状态码，成功结束退出为0，状态码值大于255，则除以256得余数作状态码</p>
+</li>
+</ul>
+<p>#####shell脚本中的结构化逻辑</p>
+<p>######条件</p>
+<ul>
+<li><p>if-then</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if command </span><br><span class="line"></span><br><span class="line">then  #退出状态码是0 (命令成功运行)，位于then部分的命令就会被执行</span><br><span class="line"></span><br><span class="line"> 	 commands </span><br><span class="line"></span><br><span class="line">fi #if-then语句到此结束</span><br></pre></td></tr></table></figure>
+<p>首先运行if后面的那个命令。如果该命令的退出状态码是0 (命令成功运行)，位于then部分的命令就会被执行。如果状态码是其他值，bash shell会继续执行脚本中的下一个命令。 </p>
+</li>
+<li><p>if-then-else</p>
+<p>当if 语句中的命令返回退出状态码0时，then部分中的命令会被执行，返回非零退出状态码时，bash shell会执行else部分中的命令，还可以编写elif语句嵌套另一个if条件。 </p>
+<p>在elif语句中，紧跟在其后的else语句属于elif代码块，它们并不属于之前的if-then</p>
+</li>
+<li><p>判断条件 — test （数值比较、字符串比较、文件比较）</p>
+<p>当你加入一个条件时，test命令会测试该条件，成立返回0，不成立返回非0</p>
+<p>if test condition，成立继续执行，不成立则执行 then后的语句</p>
+<p>bash shell中可以采用方括号替代test</p>
+<figure class="highlight sh"><figcaption><span>el lsh e</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ condition ] ; <span class="keyword">then</span></span><br><span class="line">	commands</span><br><span class="line"><span class="keyword">fi</span>  <span class="comment">#第一个方括号之后和第二个方括号之前必须加上一个空格，否则报错</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test测试用来比较文件，可以测试文件和目录的状态</p>
+</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g2dypjwnqzj30ys0ean5c.jpg" alt="照片"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test11.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Look before you leap</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> jump_directory=/home/arthur </span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">if [ -d $jump_directory ] </span><br><span class="line">then</span><br><span class="line">	echo "The $jump_directory directory exists"</span><br><span class="line">  cd $jump_directory</span><br><span class="line">  ls</span><br><span class="line">else</span><br><span class="line">	echo "The $jump_directory directory does not exist"</span><br><span class="line">fi </span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test11.sh</span></span><br><span class="line">The /home/arthur directory does not exist </span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>高级特性</p>
+<ul>
+<li>双括号——可以使用高级数学表达式</li>
+<li>双方括号——可以字符串比较，模式匹配（正则表达式）</li>
+</ul>
+</li>
+<li><p>case命令：替代多个then-else，类似于switch语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test25.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> looking <span class="keyword">for</span> a possible value <span class="comment">#</span></span></span><br><span class="line">if [ $USER = "rich" ]</span><br><span class="line">then</span><br><span class="line">	echo "Welcome $USER"</span><br><span class="line">  echo "Please enjoy your visit"</span><br><span class="line">elif [ $USER = "barbara" ]</span><br><span class="line">then</span><br><span class="line">	echo "Welcome $USER"</span><br><span class="line">  echo "Please enjoy your visit"</span><br><span class="line">elif [ $USER = "testing" ]</span><br><span class="line">then</span><br><span class="line">	echo "Special testing account"</span><br><span class="line">elif [ $USER = "jessica" ]</span><br><span class="line">then</span><br><span class="line">		echo "Do not forget to logout when you're done"</span><br><span class="line">else</span><br><span class="line">	echo "Sorry, you are not allowed here"</span><br><span class="line">fi</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test25.sh</span></span><br><span class="line">Welcome rich</span><br><span class="line">Please enjoy your visit </span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h6 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h6><ul>
+<li><p>for循环   每次遍历都会将list中的下一个数值赋给var，并在迭代完成之后一直保存最后一个数值的值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for var in list #（假定每个数值都是用空格分割的）</span><br><span class="line">do </span><br><span class="line">   commands</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更改字段分隔符</p>
+<p>shell脚本默认将（空格、制表符、换行符）视作字段的分隔符（IFS）</p>
+<p>可以通过临时修改IFS定义自己的内部换行符</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IFS=$'\n':;"   </span><br><span class="line"><span class="meta">#</span><span class="bash">这个赋值会将换行符、冒号、分号、双引号作为分隔符</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>while语句  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while test command #一般使用方括号来检查，返回非零退出码则停止执行</span><br><span class="line">do</span><br><span class="line">   other commands</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>until语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">until test command #只有测试命令退出状态码不为0，才会循环命令列表</span><br><span class="line">do</span><br><span class="line">   other commands</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>break 退出单个循环和嵌套循环中的内部循环</p>
+<p>break n 指定了要跳出的循环层级</p>
+</li>
+<li><p>continue 提前中止某次循环的命令，但不会完全中止循环</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test21</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> using the <span class="built_in">continue</span> <span class="built_in">command</span></span></span><br><span class="line">for (( var1 = 1; var1 &lt; 15; var1++ ))</span><br><span class="line">do</span><br><span class="line">	if [ $var1 -gt 5 ] &amp;&amp; [ $var1 -lt 10 ]</span><br><span class="line">  then</span><br><span class="line">  	continue </span><br><span class="line">  fi</span><br><span class="line">  echo "Iteration number: $var1"</span><br><span class="line">done</span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test21</span></span><br><span class="line">Iteration number: 1</span><br><span class="line">Iteration number: 2</span><br><span class="line">Iteration number: 3</span><br><span class="line">Iteration number: 4</span><br><span class="line">Iteration number: 5</span><br><span class="line">Iteration number: 10</span><br><span class="line">Iteration number: 11</span><br><span class="line">Iteration number: 12</span><br><span class="line">Iteration number: 13</span><br><span class="line">Iteration number: 14</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="shell输入输出"><a href="#shell输入输出" class="headerlink" title="shell输入输出"></a>shell输入输出</h5><p>######读取用户输入</p>
+<ul>
+<li><p>命令行参数（参数之间必须用空格分开）</p>
+<p>运行脚本的时候向命令行添加数据，并通过位置参数在程序当中引用命令行参数</p>
+</li>
+<li><p>位置参数</p>
+<p>位置参数是标准的数字，$0是程序名，\$1是第一个参数，以此类推直到\$9</p>
+<p>变量大于9个之后，需要在加上括号，例如${10}</p>
+<p>shell脚本自动将命令行参数的数值分配给变量，不需要做任何处理</p>
+<p>$# 含有脚本中携带的命令行参数的个数，脚本中任何地方都可以使用它</p>
+<p>$* 包含了命令行中出现的所有的命令行参数，但是会被当成一个整体</p>
+<p>$@ 将命令行上提供的所有参数都当作同一个字符串中的不同单词</p>
+</li>
+<li><p>basename命令</p>
+<p>在使用$0来传递脚本名的时候，调用脚本的命令或者路径会一并传到脚本当中</p>
+<p>可以使用basename命令来返回单独的脚本名称——name = $（baseneme \$0）</p>
+<figure class="highlight sh"><figcaption><span>elsh e</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ cat test6.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># Testing a Multi-function script </span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">name=$(basename <span class="variable">$0</span>)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$name</span> = <span class="string">"addem"</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	total=$[ <span class="variable">$1</span> + <span class="variable">$2</span> ]</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$name</span> = <span class="string">"multem"</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	total=$[ <span class="variable">$1</span> * <span class="variable">$2</span> ]</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="built_in">echo</span> The calculated value is <span class="variable">$total</span> </span><br><span class="line"><span class="comment">#</span></span><br><span class="line">$</span><br><span class="line">$ cp test6.sh addem</span><br><span class="line">$ chmod u+x addem</span><br><span class="line">$</span><br><span class="line">$ ln -s test6.sh multem</span><br><span class="line">$</span><br><span class="line">$ ls -l *em</span><br><span class="line">-rwxrw-r--. 1 Christine Christine 224 Jun 30 23:50 addem</span><br><span class="line">lrwxrwxrwx. 1 Christine Christine 8 Jun 30 23:50 multem -&gt; test6.sh</span><br><span class="line">$</span><br><span class="line">$ ./addem 2 5</span><br><span class="line"></span><br><span class="line">The calculated value is 7 </span><br><span class="line">$</span><br><span class="line">$ ./multem 2 5</span><br><span class="line"></span><br><span class="line">The calculated value is 10</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shift命令—移动变量</p>
+<p>除了存储脚本名的变量$0之外，所有变量向左移动，最左侧的变量删除</p>
+<p>shift可以用来遍历参数，也可以用来处理多个叠加的命令选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test15.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> extracting <span class="built_in">command</span> line options as parameters </span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">echo</span><br><span class="line">while [ -n "$1" ]</span><br><span class="line">do</span><br><span class="line">   case "$1" in</span><br><span class="line">     -a) echo "Found the -a option" ;;</span><br><span class="line">     -b) echo "Found the -b option" ;;</span><br><span class="line">     -c) echo "Found the -c option" ;;</span><br><span class="line">      *) echo "$1 is not an option" ;;</span><br><span class="line">   esac</span><br><span class="line">   shift </span><br><span class="line">done</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test15.sh -a -b -c -d</span></span><br><span class="line">Found the -a option</span><br><span class="line">Found the -b option</span><br><span class="line">Found the -c option</span><br><span class="line">-d is not an option</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命令行命令和参数并存</p>
+<p>linux中使用双破折线（–）来区分命令行命令和参数，可以使用shift和break提取参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test16.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> extracting options and parameters <span class="built_in">echo</span></span></span><br><span class="line">while [ -n "$1" ]</span><br><span class="line">do</span><br><span class="line">       case "$1" in</span><br><span class="line">          -a) echo "Found the -a option" ;;</span><br><span class="line">          -b) echo "Found the -b option";;</span><br><span class="line">          -c) echo "Found the -c option" ;;</span><br><span class="line">          --) shift</span><br><span class="line">              break ;;</span><br><span class="line">           *) echo "$1 is not an option";;</span><br><span class="line">       esac</span><br><span class="line">       shift </span><br><span class="line">done</span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">count=1</span><br><span class="line">for param in $@</span><br><span class="line">do</span><br><span class="line">	echo "Parameter #$count: $param"</span><br><span class="line">  count=$[ $count + 1 ]</span><br><span class="line">done</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getopt命令    getopt optstring parameters</p>
+<p>在optstring中列出需要用到的每个命令行选项字母，在每个需要参数值的选项字母之后加冒号，getopt命令会基于给定的optstring解析提供的参数。</p>
+</li>
+</ul>
+<p><img src="../../Library/Application Support/typora-user-images/image-20190508181416515.png" alt="image-20190508181416515"></p>
+<p>​       如果输入了一个不在optstring之内的参数，可以在命令行后加-g选项忽略错误消息</p>
+<p>​       在脚本中使用getopt需要使用set命令来替换原有输入</p>
+<pre><code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   set -- $(getopt -q ab:cd "$@")</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li><p>read读取</p>
+<p>从其他文件描输符接受收入，并将数据放入变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test21.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> testing the <span class="built_in">read</span> <span class="built_in">command</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">echo -n "Enter your name: "</span><br><span class="line">read name</span><br><span class="line">echo "Hello $name, welcome to my program. " </span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test21.sh</span></span><br><span class="line">Enter your name: Rich Blum</span><br><span class="line">Hello Rich Blum, welcome to my program.</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<p>-p 指定提示符 </p>
+<figure class="highlight sh"><figcaption><span>elsh e</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> -p <span class="string">"Please enter your age:"</span> age   <span class="comment">#age是变量</span></span><br></pre></td></tr></table></figure>
+<p>-t 指定read命令等待输入的时间，计时器过期则返回非零退出码（响应if-then）</p>
+<p>-s 可以避免在read命令中输入的数据显示（设置成背景颜色）</p>
+<p>read指定多个变量，则依次赋值，多余的参数全部赋给最后一个变量</p>
+<p>read部制定变量，则参数收入特殊环境变量 $REPLY</p>
+</li>
+<li><p>读取文件内容（cat+read+管道）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat test28.sh </span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> reading data from a file </span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">count=1</span><br><span class="line">cat test | while read line do</span><br><span class="line">   echo "Line $count: $line"</span><br><span class="line">   count=$[ $count + 1]</span><br><span class="line">done</span><br><span class="line">echo "Finished processing the file"</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat <span class="built_in">test</span></span></span><br><span class="line">The quick brown dog jumps over the lazy fox. This is a test, this is only a test.</span><br><span class="line">O Romeo, Romeo! Wherefore art thou Romeo?</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./test28.sh</span></span><br><span class="line">Line 1: The quick brown dog jumps over the lazy fox. Line 2: This is a test, this is only a test.</span><br><span class="line">Line 3: O Romeo, Romeo! Wherefore art thou Romeo?</span><br><span class="line">Finished processing the file</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h6 id="用户输出"><a href="#用户输出" class="headerlink" title="用户输出"></a>用户输出</h6><ul>
+<li><p>标准文件描述符</p>
+<p>linux系统把对象当成文件处理，包括输入输出进程，用文件描述符来识别文件对象，每一个进程最多可以有九个文件操作符（非负整数）</p>
+</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g2va1960tvj310s05c763.jpg" alt="image-20190509191257756"></p>
+<ul>
+<li><p>STDIN</p>
+<p>标准输入指键盘，许多命令都接受键盘的输入，例如cat没有参数的时候</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat</span></span><br><span class="line">this is a test</span><br><span class="line">this is a test</span><br><span class="line">this is a second test.</span><br><span class="line">this is a second test.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SRDOUT  标准输出是显示屏，可以通过重定向符号定向到文件当中</p>
+</li>
+<li><p>STDERR 代表脚本生成的错误消息，一般还是发送的屏幕，但是不受重定向的影响</p>
+<p>重定向错误：（1&gt; 重定向文件   2&gt;重定向错误  &amp;&gt; 重定向到同一个文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -al <span class="built_in">test</span> test2 test3 badtest 2&gt; test6 1&gt; test7</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test6</span></span><br><span class="line">ls: cannot access test: No such file or directory</span><br><span class="line">ls: cannot access badtest: No such file or directory</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat test7</span></span><br><span class="line">-rw-rw-r-- 1 rich rich 158 2014-10-16 11:32 test2</span><br><span class="line">-rw-rw-r-- 1 rich rich   0 2014-10-16 11:33 test3</span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>临时重定向</p>
+<p>脚本内部的部分行可以直接通过 &gt;&amp;2 重定向报错到单独的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "this is an error" &gt;&amp;2   #临时重定向</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>永久重定向 exec命令</p>
+<p>exec命令会启动一个新shell并将文件描述符重定向到文件，脚本中发 STDOUT的所<br>有输出会被重定向到文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">exce 0&lt;testfile    #重定向输入为文件testfile</span><br><span class="line">exce 1&gt;testout</span><br><span class="line">esce 2&gt;testorror</span><br><span class="line">exce 3&lt;&gt; testfile. #同时对同一个文件进行数据读写，shell会维护一个文件指针</span><br><span class="line">exce 3&gt;&amp;-  #关闭文件描述符，shell不再写入数据，重新打开则覆盖原有数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lsof命令：列出整个linux系统的文件描述符（包括非管理员用户）</p>
+<p>-p 指定进程pid</p>
+<p>-d 指定文件描述符编号</p>
+<p>-i 列出所有网络连接</p>
+</li>
+<li><p>隐藏命令输出</p>
+<p>将STDERR重定向隐藏文件null（/dev/null）任何数据都不会被保留</p>
+<figure class="highlight sh"><figcaption><span>el lsh e</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cat testfile</span><br><span class="line">This is the first line.</span><br><span class="line">This is the second line.</span><br><span class="line">This is the third line.</span><br><span class="line">$ cat /dev/null &gt; testfile    <span class="comment">#用来快速删除文件</span></span><br><span class="line">$ cat testfile</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>​      </p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 Yaoyee</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
